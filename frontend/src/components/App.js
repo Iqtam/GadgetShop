@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./navbar-component";
 import CustomerList from "./customer-list";
+import ProductList from "./product-list";
 function App() {
   return (
     <Router>
@@ -11,7 +12,8 @@ function App() {
         <Navbar />
         <br />
         <Routes>
-          <Route path="/" exact element={<CustomerList/>} />
+          {/* <Route path="/" exact element={<CustomerList/>} /> */}
+          <Route path="/" exact element={<ProductList />} />
         </Routes>
       </div>
     </Router>

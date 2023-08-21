@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 
-const router = require("./router/indexrouter");
+const router = require("./router/products-router");
 const api = "/api/v1";
 const app = express();
 //CORS
@@ -13,7 +13,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
-app.use(`${api}/customer`, router);
+app.use(`${api}/products`, router);
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
 
