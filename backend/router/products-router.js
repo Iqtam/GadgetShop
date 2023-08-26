@@ -8,5 +8,4 @@ router.get("/", async (req, res) => {
   res.json(all_products);
 });
 
-
 module.exports = router;

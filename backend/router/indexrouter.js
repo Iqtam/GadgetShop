@@ -1,12 +1,27 @@
-const express = require("express");
-const router = express.Router({ mergeParams: true });
-const db_customer = require("../database/db-customer");
+// libraries
+const express = require('express');
 
-router.get("/", async (req, res) => {
-  const all_customer = await db_customer.getAllCustomer();
-  console.log("all customer");
-  res.json(all_customer);
+
+const router = express.Router({mergeParams : true});
+const productRouter = require('./Products/products');
+
+
+
+
+// ROUTE: home page
+router.get('/', async (req, res) =>{
+  
+    
+
 });
+
+
+
+// setting up sub-routers
+
+router.use('/products', productRouter);
+
+
 
 
 module.exports = router;
