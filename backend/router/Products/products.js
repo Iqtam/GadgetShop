@@ -16,6 +16,7 @@ router.get("/category/:category", async (req, res) => {
     req.params.category
   );
   console.log("productsOfcategory");
+  console.log(productsOfcategory)
   res.json(productsOfcategory);
 });
 router.get("/limit=:limit",async(req,res)=>{

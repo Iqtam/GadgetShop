@@ -24,9 +24,11 @@ const CategoryProductPage = () => {
           <div className='title-md'>
             <h3>See our <span className='text-capitalize'>{category.replace("-", " ")}</span></h3>
           </div>
-
+          console.log(categoryProducts);
           {
+            
             categoryProductsStatus === STATUS.LOADING ? <Loader /> : <ProductList products = {categoryProducts} />
+            
           }
         </div>
       </div>

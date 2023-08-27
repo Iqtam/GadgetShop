@@ -40,7 +40,7 @@ async function getAllProductsByCategory(category) {
   const sql = `
   SELECT * 
   FROM PRODUCT P JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
-  WHERE  LOWER(REPLACE(CATEGORY_NAME,' ','')) LIKE '%:category%'
+  WHERE  LOWER(REPLACE(CATEGORY_NAME,' ','')) LIKE LOWER(REPLACE(:category,' ',''))
   `;
   const binds = {
     category: category,
