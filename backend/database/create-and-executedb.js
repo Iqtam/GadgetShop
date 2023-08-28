@@ -6,7 +6,7 @@ async function dbstart() {
   await oracledb.createPool({
     user: "GADGETSHOP",
     password: "12345",
-    connectString: "localhost:1521/orclpdb",
+    connectString: "localhost:1521/ORCLPDB",
     poolMin: 4,
     poolMax: 10,
     poolIncrement: 1,
