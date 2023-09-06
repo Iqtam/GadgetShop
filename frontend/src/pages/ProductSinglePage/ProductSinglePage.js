@@ -22,7 +22,8 @@ const ProductSinglePage = () => {
   // getting single product
   useEffect(() => {
     dispatch(fetchAsyncProductSingle(id));
-    console.log("product single :"+ product);
+    console.log("product single :");
+    console.log(product);
     if(cartMessageStatus){
       setTimeout(() => {
         dispatch(setCartMessageOff());
@@ -30,7 +31,7 @@ const ProductSinglePage = () => {
     }
   }, [cartMessageStatus]);
 
-  let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100));
+  // let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100));
   if(productSingleStatus === STATUS.LOADING) {
     return <Loader />
   }
@@ -38,7 +39,7 @@ const ProductSinglePage = () => {
   const increaseQty = () => {
     setQuantity((prevQty) => {
       let tempQty = prevQty + 1;
-      if(tempQty > product?.STOCK) tempQty = product?.stock;
+      if(tempQty > product?.STOCK) tempQty = product?.STOCK;
       return tempQty;
     })
   }
@@ -52,10 +53,11 @@ const ProductSinglePage = () => {
   }
 
   const addToCartHandler = (product) => {
-    let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100));
-    let totalPrice = quantity * discountedPrice;
-
-    dispatch(addToCart({...product, quantity: quantity, totalPrice, discountedPrice}));
+    // let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100));
+    // let totalPrice = quantity * discountedPrice;
+    let totalPrice =quantity*product?.PRICE
+    // dispatch(addToCart({...product, quantity: quantity, totalPrice, discountedPrice}));
+    dispatch(addToCart({...product, quantity: quantity, totalPrice}));
     dispatch(setCartMessageOn(true));
   }
   const titleParts = product?.TITLLE.split(' ');
@@ -71,29 +73,6 @@ const ProductSinglePage = () => {
                 <div className='product-img-zoom'>
                   <img src = {product?(product.IMAGE ? product.IMAGE : "") : ""} alt = "" className='img-cover' />
                 </div>
-{/* 
-                <div className='product-img-thumbs flex align-center my-2'>
-                  <div className='thumb-item'>
-                    <img src = {
-                      product ? (product.images ? product.images[1] : "") : ""
-                    } alt = "" className='img-cover' />
-                  </div>
-                  <div className='thumb-item'>
-                    <img src = {
-                      product ? (product.images ? product.images[2] : "") : ""
-                    } alt = "" className='img-cover' />
-                  </div>
-                  <div className='thumb-item'>
-                    <img src = {
-                      product ? (product.images ? product.images[3] : "") : ""
-                    } alt = "" className='img-cover' />
-                  </div>
-                  <div className='thumb-item'>
-                    <img src = {
-                      product ? (product.images ? product.images[4] : "") : ""
-                    } alt = "" className='img-cover' />
-                  </div>
-                </div> */}
               </div>
             </div>
 
@@ -113,7 +92,7 @@ const ProductSinglePage = () => {
                   <div className='vert-line'></div>
                   <div className='brand'>
                     <span className='text-orange fw-5'>Brand:</span>
-                    <span className='mx-1'>{brand}</span>
+                    <span className='mx-1'>{product?.BRAND}</span>
                   </div>
                   <div className='vert-line'></div>
                   <div className='brand'>
@@ -162,7 +141,7 @@ const ProductSinglePage = () => {
                     </button>
                   </div>
                   {
-                    (product?.stock === 0) ? <div className ='qty-error text-uppercase bg-danger text-white fs-12 ls-1 mx-2 fw-5'>out of stock</div> : ""
+                    (product?.STOCK === 0) ? <div className ='qty-error text-uppercase bg-danger text-white fs-12 ls-1 mx-2 fw-5'>out of stock</div> : ""
                   }
                 </div>
 

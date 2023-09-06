@@ -36,13 +36,13 @@ const Header = () => {
             <div className="header-cnt-top-r">
               <ul className="top-links flex align-center">
                 <li>
-                  <Link to="/">
-                    <span className="top-link-itm-txt">Register</span>
+                  <Link to="/signup">
+                    <span className="top-link-itm-txt">Signup</span>
                   </Link>
                 </li>
                 <li className="vert-line"></li>
                 <li>
-                  <Link to="/">
+                  <Link to="/signin">
                     <span className="top-link-itm-txt">Log in</span>
                   </Link>
                 </li>

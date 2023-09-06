@@ -20,6 +20,7 @@
         .navbar-search{
             padding: 4px;
             margin-left: 32px;
+            margin-right: 30px;
             border-radius: 2px;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
@@ -28,15 +29,16 @@
                 padding: 0 16px;
                 color: rgba(0, 0, 0, 0.8);
                 caret-color: $clr-orange;
+                font-size: larger;
                 &::placeholder{
-                    font-size: 13.5px;
+                    font-size: 18px;
                     font-family: $font-family-manrope;
                     letter-spacing: 0.5px;
                 }
             }
             .search-btn{
                 background-color: $clr-orange;
-                width: 60px;
+                width: 50px;
                 height: 32px;
             }
 
@@ -64,6 +66,7 @@
     }
     .navbar-cart{
         margin-left: 32px;
+        margin-right:20px;
         height: 30px;
         border-radius: 50%;
         font-size: 2rem;
@@ -93,5 +96,8 @@
                 }
             }
         }
+    }
+    .navbar-user-profile{
+        font-size: 40px;
     }
 }
