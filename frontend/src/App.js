@@ -20,6 +20,7 @@ import store from "./store/store";
 import { Provider } from "react-redux";
 import LayoutWithHeaderFooter from "./components/LayoutwithHeaderFooter/LayoutwithHeaderFooter";
 import LayoutWithoutHeaderFooter from "./components/LayoutwithoutHeaderFooter/LayoutwithoutHeaderFooter";
+import UserProfile from "./components/User/UserProfile";
 // import PersonalInfoForm from "./components/User/Personalinfo";
 function App() {
   return (
@@ -76,7 +77,7 @@ function App() {
             />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            {/* <Route path="/info" element={<PersonalInfoForm />} /> */}
+            <Route path="/info" element={<UserProfile />} />
           </Routes>
           <Footer />
         </BrowserRouter>
