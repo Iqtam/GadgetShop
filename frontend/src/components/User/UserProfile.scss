@@ -1,4 +1,5 @@
 /* UserProfile.css */
+@import '../Authentication/Login.scss';
 .maincontent{
   display: flex;
     flex-direction: column;
@@ -8,6 +9,42 @@
     background-color: rgb(214, 153, 255);
     font-size: large;
 }
+.login-form {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 600px;
+  font-size: large;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.add-button {
+  width: 30%;
+  background-color: rgb(0, 128, 9);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 10px; /* Add some margin to separate the buttons */
+}
+
+.update-button {
+  width: 30%;
+  background-color: #FF6433;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 30px; /* Add some margin to separate the buttons */
+}
+
 .profilesidebar {
   padding: 20px;
   margin-top: 20px;

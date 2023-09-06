@@ -1,179 +1,244 @@
-import React from "react";
-import {
-  Container,
-  Grid,
-  Paper,
-  Typography,
-  Button,
-  TextField,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-} from "@mui/material";
-import { Edit } from "@mui/icons-material";
-import styles from "./UserProfile.module.scss"; // You can create this CSS file for custom styling
+import React, { useState } from 'react';
+import "./UserProfile.scss"
 
-function UserProfile() {
-  const user = {
-    NAME: "John Doe", // Replace with the actual user data
-    DOB: "1990-01-01", // Replace with the actual user data
+const UserProfile = () => {
+  const initialUserData = {
+    first_name: 'John',
+    last_name: 'Doe',
+    date_of_birth: '1990-01-01',
+    house: '123 Main St',
+    road: 'Apt 4B',
+    area: 'Downtown',
+    state: 'CA',
+    city: 'Los Angeles',
+    contact_number: '123-456-7890',
+    email: 'john.doe@example.com',
+    password: '********', // You should never display the actual password
   };
-  const textFieldStyle = {
-    color: "black", // Set the text color to black
-    marginBottom: "16px",
+
+  const [userData, setUserData] = useState(initialUserData);
+  const [editPersonal, seteditPersonal] = useState(false);
+  const [editAddress, seteditAddress] = useState(false);
+  const [editContact, seteditContact] = useState(false);
+  const [editEmailPassword, seteditEmailPassword] = useState(false);
+
+  const handleeditPersonal = () => {
+    seteditPersonal(true);
   };
+  const handleeditAddress = () => {
+    seteditAddress(true);
+  };
+  const handleeditContact = () => {
+    seteditContact(true);
+  };
+  const handleeditEmailPassword = () => {
+    seteditEmailPassword(true);
+  };
+
+  const handleSavePersonal = () => {
+    // Implement logic to save the updated data to the server or state here
+    seteditPersonal(false);
+  };
+  const handleSaveAddress = () => {
+    // Implement logic to save the updated data to the server or state here
+    seteditAddress(false);
+  };
+  const handleSaveContact = () => {
+    // Implement logic to save the updated data to the server or state here
+    seteditContact(false);
+  };
+  const handleSaveEmailPassword = () => {
+    // Implement logic to save the updated data to the server or state here
+    seteditEmailPassword(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+
+  const renderButton = (section) => {
+    if (editMode) {
+      return (
+        <button className='update-button' onClick={handleSaveClick}>
+          Save
+        </button>
+      );
+    } else {
+      return (
+        <button className='update-button' onClick={handleEditClick}>
+          Edit
+        </button>
+      );
+    }
+  };
+
   return (
-    <div className={styles.maincontent}>
-      <Container>
-        <Grid container spacing={3}>
-          <Grid item xs={3}>
-            <Paper elevation={3} className={styles.profilesidebar}>
-              <Grid container spacing={2}>
-                <Grid item xs={3}></Grid>
-                <Grid item xs={9}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontSize: 20,
-                    }}
-                  >
-                    Hello
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      fontSize: 30, 
-                    }}
-                  >
-                    Name
-                  </Typography>
-                </Grid>
-              </Grid>
-              <div className={styles.profilesidebar}>
-                <List component="nav" sx={{
-                      fontSize: 30, 
-                    }}>
-                <ListItemButton>
-                    <ListItemText   sx={{
-                      fontSize: 30, 
-                    }}>My Account</ListItemText>
-                  </ListItemButton>
-                  <ListItemButton>
-                    <ListItemText primary="My Orders" />
-                  </ListItemButton>
-                  <ListItemButton>
-                    <ListItemText primary="My Lists" />
-                    </ListItemButton>
-                  <ListItemButton>
-                    <ListItemText primary="My Wishlist" />
-                    </ListItemButton>
-                  <ListItemButton>
-                    <ListItemText primary="My Ratings and Reviews" />
-                    </ListItemButton>
-                </List>
-              </div>
-            </Paper>
-          </Grid>
-          <Grid item xs={9}>
-            <Paper elevation={3} className={styles.profilecontent}>
-              <div className={styles.profileheader}>
-                <Typography variant="h3">Profile</Typography>
-                <Button
-                  variant="outlined"
-                  startIcon={<Edit />}
-                  className="edit-profile-button"
-                >
-                  Edit Profile
-                </Button>
-              </div>
-              <section className={styles.profilesection}>
-                <Typography variant="h4">Personal Information</Typography>
-                <hr />
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      label="Name"
-                      value={user.NAME}
-                      variant="outlined"
-                      InputProps={{
-                        style: textFieldStyle, // Apply the custom style here
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      type="date"
-                      fullWidth
-                      label="Your Date of Birth"
-                      value={user.DOB}
-                      variant="outlined"
-                      InputProps={{
-                        style: textFieldStyle, // Apply the custom style here
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-              </section>
-              <section className={styles.profilesection}>
-                <Typography variant="h4">Contact Information</Typography>
-                <hr />
-                <form>
-                  <Grid container spacing={3}>
-                    <Grid item xs={6}>
-                      <TextField
-                        //   disabled
-                        fullWidth
-                        label="Phone Number"
-                        value=""
-                        variant="outlined"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        //   disabled
-                        fullWidth
-                        type="email"
-                        label="Email address"
-                        value=""
-                        variant="outlined"
-                      />
-                    </Grid>
-                  </Grid>
-                </form>
-              </section>
-              <section className={styles.profilesection}>
-                <Typography variant="h4">Profile Picture</Typography>
-                <hr />
-                <form>
-                  <Grid container spacing={3}>
-                    <Grid item xs={2}>
-                      <img
-                        className="img-fluid circular"
-                        src=""
-                        alt="User Profile"
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField
-                        disabled
-                        fullWidth
-                        label="Link"
-                        value=""
-                        variant="outlined"
-                      />
-                    </Grid>
-                  </Grid>
-                </form>
-              </section>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Container>
+    <div className="maincontent">
+      <form className='login-form'>
+        <h1>My Profile</h1>
+        <div className="personal-information">
+          <div className="info-section">
+            <h2>Personal Information</h2>
+            <div>
+              <label>First Name:</label>
+              <input
+                type="text"
+                className="login-input"
+                name="first_name"
+                value={userData.first_name}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label>Last Name:</label>
+              <input
+                type="text"
+                className="login-input"
+                name="last_name"
+                value={userData.last_name}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label>Date of Birth:</label>
+              <input
+                type="date"
+                className="login-input"
+                name="date_of_birth"
+                value={userData.date_of_birth}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div>{renderButton('personal-information')}</div>
+        </div>
+      <div className="address">
+        <div className="info-section">
+          <h2>Address</h2>
+          <div>
+            <label>House:</label>
+            <input
+                type="text"
+                className="login-input"
+                name="house"
+                value={userData.house}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+            
+          </div>
+          <div>
+            <label>Road:</label>
+            <input
+                type="text"
+                className="login-input"
+                name="house"
+                value={userData.road}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+          </div>
+          <div>
+            <label>Area:</label>
+            <input
+                type="text"
+                className="login-input"
+                name="house"
+                value={userData.area}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+          </div>
+          <div>
+            <label>State:</label>
+            <input
+                type="text"
+                className="login-input"
+                name="house"
+                value={userData.state}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+          </div>
+          <div>
+            <label>City:</label>
+            <input
+                type="text"
+                className="login-input"
+                name="house"
+                value={userData.city}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+          </div>
+        </div>
+        <div >
+        <div>{renderButton('address')}</div>
+        </div>
+      </div>
+      <div className="contact-number">
+          <div className="info-section">
+            <h2>Contact Number</h2>
+            <div>
+              <label>Contact Number:</label>
+              <input
+                type="text"
+                className="login-input"
+                name="contact_number"
+                value={userData.contact_number}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div>{renderButton('contact-number')}</div>
+        </div>
+        <div className="email-and-password">
+          <div className="info-section">
+            <h2>Email and Password</h2>
+            <div>
+              <label>Email:</label>
+              <input
+                type="text"
+                className="login-input"
+                name="email"
+                value={userData.email}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label>Password:</label>
+              <input
+                type="password"
+                className="login-input"
+                name="password"
+                value={userData.password}
+                readOnly={!editMode}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div>{renderButton('email-and-password')}</div>
+        </div>
+        {/* Add buttons for Save/Update outside of individual sections if needed */}
+        {editMode && (
+          <div className="save-buttons">
+            <button className='update-button' onClick={handleSaveClick}>
+              Save
+            </button>
+          </div>
+        )}
+      </form>
     </div>
   );
-}
+};
 
 export default UserProfile;
