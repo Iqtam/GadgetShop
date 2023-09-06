@@ -1,0 +1,44 @@
+.user-information-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top:  4.8rem!important;
+  margin-bottom: 4.8rem!important;
+  // height: 100vh; /* Adjust to your desired height or remove it */
+}
+
+.user-information {
+  width: 600px; /* Adjust the width as needed */
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+}

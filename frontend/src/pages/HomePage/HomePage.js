@@ -18,7 +18,8 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(fetchAsyncProducts(50));
-  }, [dispatch]);
+    console.log("use effect ");
+  }, []);
 
   const products = useSelector(getAllProducts);
   const productStatus = useSelector(getAllProductsStatus);
@@ -35,8 +36,10 @@ const HomePage = () => {
       tempProducts[i] = products[randomIndex];
     }
   }
-  console.log("Products:", products);
-  console.log("Categories:", categories);
+  console.log("home page");
+  console.log(products);
+  console.log("product-category");
+  console.log(categories);
 
   let catProductsOne = products.filter(
     (product) => product.CATEGORY_ID === categories[0].CATEGORY_ID
@@ -70,49 +73,54 @@ const HomePage = () => {
               )}
             </div>
 
-            <div className="categories-item">
-              <div className="title-md">
-                <h3>{categories[0].CATEGORY_NAME}</h3>
+            {categories.length > 0 && (
+              <div className="categories-item">
+                <div className="title-md">
+                  <h3>{categories[0].CATEGORY_NAME}</h3>
+                </div>
+                {productStatus === STATUS.LOADING ? (
+                  <Loader />
+                ) : (
+                  <ProductList products={catProductsOne} />
+                )}
               </div>
-              {productStatus === STATUS.LOADING ? (
-                <Loader />
-              ) : (
-                <ProductList products={catProductsOne} />
-              )}
-            </div>
-
-            <div className="categories-item">
-              <div className="title-md">
-                <h3>{categories[1].CATEGORY_NAME}</h3>
+            )}
+            {categories.length > 0 && (
+              <div className="categories-item">
+                <div className="title-md">
+                  <h3>{categories[1].CATEGORY_NAME}</h3>
+                </div>
+                {productStatus === STATUS.LOADING ? (
+                  <Loader />
+                ) : (
+                  <ProductList products={catProductsTwo} />
+                )}
               </div>
-              {productStatus === STATUS.LOADING ? (
-                <Loader />
-              ) : (
-                <ProductList products={catProductsTwo} />
-              )}
-            </div>
-
-            <div className="categories-item">
-              <div className="title-md">
-                <h3>{categories[2].CATEGORY_NAME}</h3>
+            )}
+            {categories.length > 0 && (
+              <div className="categories-item">
+                <div className="title-md">
+                  <h3>{categories[2].CATEGORY_NAME}</h3>
+                </div>
+                {productStatus === STATUS.LOADING ? (
+                  <Loader />
+                ) : (
+                  <ProductList products={catProductsThree} />
+                )}
               </div>
-              {productStatus === STATUS.LOADING ? (
-                <Loader />
-              ) : (
-                <ProductList products={catProductsThree} />
-              )}
-            </div>
-
-            <div className="categories-item">
-              <div className="title-md">
-                <h3>{categories[3].CATEGORY_NAME}</h3>
+            )}
+            {categories.length > 0 && (
+              <div className="categories-item">
+                <div className="title-md">
+                  <h3>{categories[3].CATEGORY_NAME}</h3>
+                </div>
+                {productStatus === STATUS.LOADING ? (
+                  <Loader />
+                ) : (
+                  <ProductList products={catProductsFour} />
+                )}
               </div>
-              {productStatus === STATUS.LOADING ? (
-                <Loader />
-              ) : (
-                <ProductList products={catProductsFour} />
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>

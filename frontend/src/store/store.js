@@ -4,14 +4,15 @@ import categoryReducer from "./categorySlice";
 import productReducer from "./productSlice";
 import cartReducer from "./cartSlice";
 import searchReducer from "./searchSlice";
-
+import authenticationReducer from "./authenticationSlice";
 const store = configureStore({
     reducer: {
         sidebar: sidebarReducer,
         category: categoryReducer,
         product: productReducer,
         cart: cartReducer,
-        search: searchReducer
+        search: searchReducer,
+        authentication:authenticationReducer,
     }
 });
 
