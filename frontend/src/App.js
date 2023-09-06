@@ -3,13 +3,14 @@ import "./App.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // pages
 import {
+  Login,
+  Signup,
   Home,
   CategoryProduct,
   ProductSingle,
   Cart,
   Search,
-  Login,
-  Signup,
+  
 } from "./pages/index";
 // components
 import Header from "./components/Header/Header";
@@ -19,7 +20,7 @@ import store from "./store/store";
 import { Provider } from "react-redux";
 import LayoutWithHeaderFooter from "./components/LayoutwithHeaderFooter/LayoutwithHeaderFooter";
 import LayoutWithoutHeaderFooter from "./components/LayoutwithoutHeaderFooter/LayoutwithoutHeaderFooter";
-import PersonalInfoForm from "./components/User/Personalinfo";
+// import PersonalInfoForm from "./components/User/Personalinfo";
 function App() {
   return (
     <div className="App">
@@ -75,7 +76,7 @@ function App() {
             />
             <Route path="/signin" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/info" element={<PersonalInfoForm />} />
+            {/* <Route path="/info" element={<PersonalInfoForm />} /> */}
           </Routes>
           <Footer />
         </BrowserRouter>

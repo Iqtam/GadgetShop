@@ -57,7 +57,7 @@ const Navbar = () => {
             <div className="flex align-center">
               <input
                 type="text"
-                className="form-control fs-14"
+                className="form-control fs-18"
                 placeholder="Search your preferred items here"
                 onChange={(e) => handleSearchTerm(e)}
               />
