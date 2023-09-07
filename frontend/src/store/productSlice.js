@@ -44,11 +44,13 @@ const productSlice = createSlice({
 
       .addCase(fetchAsyncProductSingle.pending, (state, action) => {
         state.productSingleStatus = STATUS.LOADING;
+        
       })
 
       .addCase(fetchAsyncProductSingle.fulfilled, (state, action) => {
         state.productSingle = action.payload;
         state.productSingleStatus = STATUS.SUCCEEDED;
+        state.selectedProduct = action.payload;
       })
 
       .addCase(fetchAsyncProductSingle.rejected, (state, action) => {
@@ -87,6 +89,25 @@ const productSlice = createSlice({
       .addCase(fetchCategoriesAsync.fulfilled, (state, action) => {
         state.productsStatus = STATUS.SUCCEEDED;
         state.categories = action.payload;
+      })
+      .addCase(createProductAsync.pending, (state) => {
+        state.productsStatus = STATUS.LOADING;
+      })
+      .addCase(createProductAsync.fulfilled, (state, action) => {
+        state.productsStatus = STATUS.IDLE;
+        state.products.push(action.payload);
+      })
+      .addCase(updateProductAsync.pending, (state) => {
+        state.productsStatus = STATUS.LOADING;
+      })
+      .addCase(updateProductAsync.fulfilled, (state, action) => {
+        state.productsStatus = STATUS.IDLE;
+        const index = state.products.findIndex(
+          (product) => product.PRODUCT_ID === action.payload.PRODUCT_ID
+        );
+        state.products[index] = action.payload;
+        state.selectedProduct = action.payload;
+
       });
   },
 });
@@ -172,6 +193,7 @@ export const { clearSelectedProduct } = productSlice.actions;
 export const selectTotalItems = (state) => state.product.totalItems;
 export const selectBrands = (state) => state.product.brands;
 export const selectCategories = (state) => state.product.categories;
+export const selectProductById = (state) => state.product.selectedProduct;
 export const getAllProducts = (state) => state.product.products;
 export const getAllProductsStatus = (state) => state.product.productsStatus;
 export const getProductSingle = (state) => state.product.productSingle;
