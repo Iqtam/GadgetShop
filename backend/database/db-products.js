@@ -122,6 +122,33 @@ async function getProductBYId(id) {
   }
 }
 
+async function searchProducts(searchQuery) {
+
+  const sql = `
+  SELECT *
+  FROM PRODUCT P 
+  JOIN SUPPLIER S ON (S.SUPPLIER_ID = P.SUPPLIER_ID) JOIN CATEGORY C ON (C.CATEGORY_ID = P.CATEGORY_ID)
+  WHERE LOWER(P.TITLLE) LIKE :searchQuery
+  OR LOWER(S.COMPANY_NAME) LIKE :searchQuery
+  OR LOWER(C.CATEGORY_NAME) LIKE :searchQuery
+  `;
+  const binds = {
+    searchQuery: `%${searchQuery.toLowerCase()}%`,
+  };
+  console.log(searchQuery);
+
+  try {
+    const result = await database.dbexecute(sql, binds, database.dboptions);
+    if (result) {
+      return result.rows;
+    } else {
+      console.error("Query result is undefined.");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
 module.exports = {
   getAllProduct,
   getAllCategories,
@@ -129,4 +156,5 @@ module.exports = {
   getLimitedProducts,
   getProductBYId,
   getAllProductsBySupplier,
+  searchProducts,
 };
