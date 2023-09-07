@@ -166,12 +166,12 @@ function SupplierProductForm() {
                       required: "brand is required",
                     })}
                   >
-                    <option value={selectedProduct.BRAND}>{selectedProduct.BRAND}</option>
-                    {/* {brands.map((brand) => (
+                      <option value={selectedProduct?.BRAND}>{selectedProduct?.BRAND}</option>
+                     {brands.map((brand) => (
                       <option key={brand.value} value={brand.value}>
                         {brand.label}
                       </option>
-                    ))} */}
+                    ))} 
                   </select>
                 </div>
               </div>
@@ -189,7 +189,7 @@ function SupplierProductForm() {
                       required: "category is required",
                     })}
                   >
-                    <option value="">{selectedProduct.CATEGORY_NAME}</option>
+                    <option value="">{selectedProduct?.CATEGORY_NAME}</option>
                     {categories.map((category) => (
                       <option key={category.CATEGORY_ID} value={category.CATEGORY_NAME}>
                         {category.CATEGORY_NAME}

@@ -7,6 +7,7 @@ async function dbstart() {
     user: "GADGETSHOP",
     password: "12345",
     connectString: "localhost:1521/ORCLPDB",
+    poolAlias:'default',
     poolMin: 4,
     poolMax: 10,
     poolIncrement: 1,
