@@ -1,16 +1,146 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { createOrder, fetchAllOrders,updateOrder } from './orderAPI';
-import { STATUS } from '../utils/status';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createOrder, fetchAllOrders, updateOrder } from "./orderAPI";
+import { STATUS } from "../utils/status";
 const initialState = {
-  orders: [],
+  orders: [
+    {
+      items: [
+        {
+          title: "iPhone X",
+          description:
+            "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          price: 899,
+          discountPercentage: 17.94,
+          rating: 4.44,
+          stock: 34,
+          brand: "Apple",
+          category: "smartphones",
+          thumbnail: "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          images: [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          ],
+          quantity: 2,
+          user: 1,
+          id: 6,
+        },
+      ],
+
+      totalAmount: 1798,
+      totalItems: 2,
+      user: {
+        email: "test@gmail.com",
+        password: "Qwerty123",
+        addresses: [
+          {
+            name: "Abhishek R",
+            email: "test@gmail.com",
+            phone: "1234567788",
+            street: "11th Main",
+            city: "Banaglore",
+            state: "Karnataka",
+            pinCode: "560034",
+          },
+          {
+            name: "Abhishek R",
+            email: "test@gmail.com",
+            phone: "1234567788",
+            street: "11th Main",
+            city: "Banaglore",
+            state: "Karnataka",
+            pinCode: "560034",
+          },
+        ],
+        id: 1,
+      },
+      paymentMethod: "cash",
+      selectedAddress: {
+        name: "Abhishek R",
+        email: "test@gmail.com",
+        phone: "1234567788",
+        street: "11th Main",
+        city: "Banaglore",
+        state: "Karnataka",
+        pinCode: "560034",
+      },
+      status: "dispatched",
+      id: 1,
+    },
+    {
+      items: [
+        {
+          title: "iPhone X",
+          description:
+            "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
+          price: 899,
+          discountPercentage: 17.94,
+          rating: 4.44,
+          stock: 34,
+          brand: "Apple",
+          category: "smartphones",
+          thumbnail: "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          images: [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+          ],
+          quantity: 2,
+          user: 1,
+          id: 6,
+        },
+      ],
+      totalAmount: 1798,
+      totalItems: 2,
+      user: {
+        email: "test@gmail.com",
+        password: "Qwerty123",
+        addresses: [
+          {
+            name: "Abhishek R",
+            email: "test@gmail.com",
+            phone: "1234567788",
+            street: "11th Main",
+            city: "Banaglore",
+            state: "Karnataka",
+            pinCode: "560034",
+          },
+          {
+            name: "Abhishek R",
+            email: "test@gmail.com",
+            phone: "1234567788",
+            street: "11th Main",
+            city: "Banaglore",
+            state: "Karnataka",
+            pinCode: "560034",
+          },
+        ],
+        id: 1,
+      },
+      paymentMethod: "cash",
+      selectedAddress: {
+        name: "Abhishek R",
+        email: "test@gmail.com",
+        phone: "1234567788",
+        street: "11th Main",
+        city: "Banaglore",
+        state: "Karnataka",
+        pinCode: "560034",
+      },
+      status: "delivered",
+      id: 2,
+    },
+  ],
   status: STATUS.IDLE,
   currentOrder: null,
-  totalOrders: 0
+  totalOrders: 0,
 };
 //we may need more info of current order
 
 export const createOrderAsync = createAsyncThunk(
-  'order/createOrder',
+  "order/createOrder",
   async (order) => {
     const response = await createOrder(order);
     // The value we return becomes the `fulfilled` action payload
@@ -18,7 +148,7 @@ export const createOrderAsync = createAsyncThunk(
   }
 );
 export const updateOrderAsync = createAsyncThunk(
-  'order/updateOrder',
+  "order/updateOrder",
   async (order) => {
     const response = await updateOrder(order);
     // The value we return becomes the `fulfilled` action payload
@@ -27,16 +157,16 @@ export const updateOrderAsync = createAsyncThunk(
 );
 
 export const fetchAllOrdersAsync = createAsyncThunk(
-  'order/fetchAllOrders',
-  async ({sort, pagination}) => {
-    const response = await fetchAllOrders(sort,pagination);
+  "order/fetchAllOrders",
+  async ({ sort, pagination }) => {
+    const response = await fetchAllOrders(sort, pagination);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
 );
 
 export const orderSlice = createSlice({
-  name: 'order',
+  name: "order",
   initialState,
   reducers: {
     resetOrder: (state) => {
@@ -66,9 +196,11 @@ export const orderSlice = createSlice({
       })
       .addCase(updateOrderAsync.fulfilled, (state, action) => {
         state.status = STATUS.SUCCEEDED;
-        const index =  state.orders.findIndex(order=>order.id===action.payload.id)
+        const index = state.orders.findIndex(
+          (order) => order.id === action.payload.id
+        );
         state.orders[index] = action.payload;
-      })
+      });
   },
 });
 

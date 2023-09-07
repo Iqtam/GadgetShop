@@ -10,4 +10,5 @@ import UserOrders from "./UserPage/UserOrdersPage";
 import PageNotFound from "./NotFoundPage/NotFoundPage";
 import SupplierProductList from "./SupplierPage/SupplierProductListPage";
 import SupplierProductForm from "./SupplierPage/SupplierProductFormPage";
-export {Home, CategoryProduct, ProductSingle, Cart, Search,Login,Signup,UserProfile,UserOrders,PageNotFound,SupplierProductList,SupplierProductForm};
+import SupplierOrders from "./SupplierPage/SupplierOrdersPage";
+export {Home, CategoryProduct, ProductSingle, Cart, Search,Login,Signup,UserProfile,UserOrders,PageNotFound,SupplierProductList,SupplierProductForm,SupplierOrders};
