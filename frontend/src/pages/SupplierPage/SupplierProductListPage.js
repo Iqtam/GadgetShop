@@ -11,6 +11,7 @@ import {
 } from "../../store/productSlice";
 import Loader from "../../components/Loader/Loader";
 import { STATUS } from "../../utils/status";
+import SupplierProductList from "../../components/Supplier/SupplierProductList";
 
 const SupplierProductListPage = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const SupplierProductListPage = () => {
             <div className="categories-item">
               <Link
                 to="/supplier/product-form"
-                className="rounded-md mx-100 my-5 bg-green-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md ml-auto mx-100 my-5 mb-8 bg-green-700 px-3 py-2 text-sm font-semibold text-white  shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Add New Product
               </Link>
@@ -57,7 +58,7 @@ const SupplierProductListPage = () => {
               {productStatus === STATUS.LOADING ? (
                 <Loader />
               ) : (
-                <ProductList products={tempProducts} />
+                <SupplierProductList products={tempProducts} />
               )}
             </div>
           </div>

@@ -14,6 +14,7 @@ import {
   UserProfile,
   UserOrders,
   SupplierProductList,
+  SupplierProductForm,
   
 } from "./pages/index";
 // components
@@ -83,7 +84,7 @@ function App() {
             <Route exact path="/customer/my-profile" element={<UserProfile />} />
             <Route exact path="/customer/my-orders" element={<UserOrders />} />
             <Route exact path="/supplier/product-list" element={<SupplierProductList />} />
-            <Route exact path="/supplier/product-form"  />
+            <Route exact path="/supplier/product-form/edit/:id" element={<SupplierProductForm/>} />
             <Route path='*' element={<PageNotFound/>} />
           </Routes>
           <Footer />
