@@ -29,17 +29,30 @@ router.get("/limit=:limit", async (req, res) => {
 
 router.get("/supplierId=:supplierId", async (req, res) => {
   const productsOfSupplier = await db_products.getAllProductsBySupplier(
-    req.params.supplierId
-  );
+    req.params.supplierId );
   // console.log(productsOfSupplier);
   console.log("productsOfSupplier");
   res.json(productsOfSupplier);
 });
+
+router.get("/search", async(req, res) => {
+  console.log(req.query)
+  const  {q}  = req.query;
+  if(!q) {
+    return res.status(400).json({error: "Missing search query"});
+  }
+
+  const searchResults = await db_products.searchProducts(q);
+  console.log(searchResults);
+  res.status(200).json(searchResults);
+});
+ 
 router.get("/:id", async (req, res) => {
   const product_by_id = await db_products.getProductBYId(req.params.id);
   console.log("product_by_id");
   res.json(product_by_id);
 });
+
 
 
 ///FUAD FUAD next er gula kor
