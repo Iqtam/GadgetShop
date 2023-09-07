@@ -26,6 +26,20 @@ router.get("/limit=:limit",async(req,res)=>{
   console.log("limited_products");
   res.json(limited_products);
 });
+
+
+router.get("/search", async(req, res) => {
+  console.log(req.query)
+  const  {q}  = req.query;
+  if(!q) {
+    return res.status(400).json({error: "Missing search query"});
+  }
+
+  const searchResults = await db_products.searchProducts(q);
+  console.log(searchResults);
+  res.status(200).json(searchResults);
+});
+
 router.get("/:id",async(req,res)=>{
   const product_by_id = await db_products.getProductBYId(
     req.params.id
