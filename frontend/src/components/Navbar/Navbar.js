@@ -96,9 +96,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-user-profile">
           <AccountMenu></AccountMenu>
-          {/* <Stack direction="row" spacing={2}>
-            <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
-          </Stack> */}
+          
           
         </div>
       </div>
