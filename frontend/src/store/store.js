@@ -6,6 +6,7 @@ import cartReducer from "./cartSlice";
 import searchReducer from "./searchSlice";
 import authenticationReducer from "./authenticationSlice";
 import userReducer from "./userSlice";
+import orderReducer from "./orderSlice";
 const store = configureStore({
     reducer: {
         sidebar: sidebarReducer,
@@ -14,7 +15,8 @@ const store = configureStore({
         cart: cartReducer,
         search: searchReducer,
         authentication:authenticationReducer,
-        user:userReducer
+        user:userReducer,
+        order:orderReducer,
     }
 });
 

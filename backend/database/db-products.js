@@ -56,6 +56,27 @@ async function getAllProductsByCategory(category) {
     console.error("An error occurred:", error);
   }
 }
+
+async function getAllProductsBySupplier(supplierId) {
+  const sql = `
+  SELECT * 
+  FROM PRODUCT P JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
+  WHERE  P.SUPPLIER_ID=:supplierId
+  `;
+  const binds = {
+    supplierId: supplierId,
+  };
+  try {
+    const result = await database.dbexecute(sql, binds, database.dboptions);
+    if (result) {
+      return result.rows;
+    } else {
+      console.error("Query result is undefined.");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
 async function getLimitedProducts(limit) {
   const sql = `
   SELECT * 
@@ -107,4 +128,5 @@ module.exports = {
   getAllProductsByCategory,
   getLimitedProducts,
   getProductBYId,
+  getAllProductsBySupplier,
 };

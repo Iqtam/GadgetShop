@@ -19,17 +19,24 @@ router.get("/category/:category", async (req, res) => {
   // console.log(productsOfcategory)
   res.json(productsOfcategory);
 });
-router.get("/limit=:limit",async(req,res)=>{
+router.get("/limit=:limit", async (req, res) => {
   const limited_products = await db_products.getLimitedProducts(
     req.params.limit
   );
   console.log("limited_products");
   res.json(limited_products);
 });
-router.get("/:id",async(req,res)=>{
-  const product_by_id = await db_products.getProductBYId(
-    req.params.id
+
+router.get("/supplierId=:supplierId", async (req, res) => {
+  const productsOfSupplier = await db_products.getAllProductsBySupplier(
+    req.params.supplierId
   );
+  // console.log(productsOfSupplier);
+  console.log("productsOfSupplier");
+  res.json(productsOfSupplier);
+});
+router.get("/:id", async (req, res) => {
+  const product_by_id = await db_products.getProductBYId(req.params.id);
   console.log("product_by_id");
   res.json(product_by_id);
 });

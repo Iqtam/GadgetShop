@@ -144,7 +144,7 @@ const ProductSinglePage = () => {
                     (product?.STOCK === 0) ? <div className ='qty-error text-uppercase bg-danger text-white fs-12 ls-1 mx-2 fw-5'>out of stock</div> : ""
                   }
                 </div>
-
+                  {/* ///Todo do not display for supplier */}
                 <div className='btns'>
                   <button type = "button" className='add-to-cart-btn btn'>
                     <i className='fas fa-shopping-cart'></i>

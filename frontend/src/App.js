@@ -3,6 +3,7 @@ import "./App.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // pages
 import {
+  PageNotFound,
   Login,
   Signup,
   Home,
@@ -10,6 +11,9 @@ import {
   ProductSingle,
   Cart,
   Search,
+  UserProfile,
+  UserOrders,
+  SupplierProductList,
   
 } from "./pages/index";
 // components
@@ -18,10 +22,9 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import store from "./store/store";
 import { Provider } from "react-redux";
-import LayoutWithHeaderFooter from "./components/LayoutwithHeaderFooter/LayoutwithHeaderFooter";
-import LayoutWithoutHeaderFooter from "./components/LayoutwithoutHeaderFooter/LayoutwithoutHeaderFooter";
-import UserProfile from "./components/User/UserProfile";
-// import PersonalInfoForm from "./components/User/Personalinfo";
+
+
+
 function App() {
   return (
     <div className="App">
@@ -30,7 +33,7 @@ function App() {
           <Header />
           <Sidebar />
           <Routes>
-            {/* home page route */}
+            
             <Route
               path="/"
               element={
@@ -39,7 +42,7 @@ function App() {
                 </>
               }
             />
-            {/* single product route */}
+            
             <Route
               path="/product/:id"
               element={
@@ -48,7 +51,7 @@ function App() {
                 </>
               }
             />
-            {/* category wise product listing route */}
+            
             <Route
               path="/category/:category"
               element={
@@ -57,7 +60,7 @@ function App() {
                 </>
               }
             />
-            {/* cart */}
+            
             <Route
               path="/cart"
               element={
@@ -66,7 +69,7 @@ function App() {
                 </>
               }
             />
-            {/* searched products */}
+            
             <Route
               path="/search/:searchTerm"
               element={
@@ -76,8 +79,12 @@ function App() {
               }
             />
             <Route path="/signin" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/info" element={<UserProfile />} />
+            <Route path="/signup" element={<Signup />} /> 
+            <Route exact path="/customer/my-profile" element={<UserProfile />} />
+            <Route exact path="/customer/my-orders" element={<UserOrders />} />
+            <Route exact path="/supplier/product-list" element={<SupplierProductList />} />
+            <Route exact path="/supplier/product-form"  />
+            <Route path='*' element={<PageNotFound/>} />
           </Routes>
           <Footer />
         </BrowserRouter>

@@ -25,7 +25,7 @@ $transition-ease: all 300ms ease-in-out;
   scroll-behavior: smooth;
 }
 html{
-  font-size: 10px;
+  font-size: 14px;
 }
 body{
   font-size: 1.6rem;
@@ -36,37 +36,37 @@ body{
 ul{
   list-style-type: none;
 }
-a{
-  text-decoration: none;
-  color: unset;
-}
+// a{
+//   text-decoration: none;
+//   color: unset;
+// }
 h1, h2, h3, h4, h5, h6{
   text-transform: capitalize;
 }
-img{
-    width: 100%;
-    display: block;
-}
-.img-cover{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-button{
-    cursor: pointer;
-    outline: 0;
-    border: none;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: 1.8rem;
-}
-input, textarea, select{
-    outline: 0;
-    border: none;
-    resize: none;
-    font-family: inherit;
-    font-size: 1.6rem;
-}
+// img{
+//     width: 100%;
+//     display: block;
+// }
+// .img-cover{
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover;
+// }
+// button{
+//     cursor: pointer;
+//     outline: 0;
+//     border: none;
+//     background-color: transparent;
+//     font-family: inherit;
+//     font-size: 1.8rem;
+// }
+// input, textarea, select{
+//     outline: 0;
+//     border: none;
+//     resize: none;
+//     font-family: inherit;
+//     font-size: 1.6rem;
+// }
 
 /* custom utility classes */
 .container{
@@ -248,7 +248,7 @@ input, textarea, select{
   position: relative;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
-  h3{
+  h4{
     color: rgba(0, 0, 0, 0.4);
     font-weight: 600;
     text-transform: uppercase;

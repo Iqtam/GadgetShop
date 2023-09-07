@@ -39,6 +39,18 @@ const productSlice = createSlice({
 
       .addCase(fetchAsyncProductSingle.rejected, (state, action) => {
         state.productSingleStatus = STATUS.FAILED;
+      })
+      .addCase(fetchAsyncProductsOfSupplier.pending, (state, action) => {
+        state.productsStatus = STATUS.LOADING;
+      })
+
+      .addCase(fetchAsyncProductsOfSupplier.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.productsStatus = STATUS.SUCCEEDED;
+      })
+
+      .addCase(fetchAsyncProductsOfSupplier.rejected, (state, action) => {
+        state.productsStatus = STATUS.FAILED;
       });
   },
 });
@@ -48,6 +60,16 @@ export const fetchAsyncProducts = createAsyncThunk(
   "products/fetch",
   async (limit) => {
     const response = await fetch(`${BASE_URL}/products/limit=${limit}`);
+    const data = await response.json();
+    return data;
+  }
+);
+export const fetchAsyncProductsOfSupplier = createAsyncThunk(
+  "products-of-supplier/fetch",
+  async (supplierId) => {
+    const response = await fetch(
+      `${BASE_URL}/products/supplierId=${supplierId}`
+    );
     const data = await response.json();
     return data;
   }
