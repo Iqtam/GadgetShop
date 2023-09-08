@@ -50,24 +50,21 @@ router.get("/search", async(req, res) => {
   res.status(200).json(searchResults);
 });
 
-
-
-///FUAD FUAD next er gula kor
 router.post("/create-product", async (req, res) => {
   console.log(req.body);
-  const create_product = await db_products.createProduct(req.body);/// database er product e lekhbi
+  const create_product = await db_products.createProduct(req.body);
   console.log("create_product");
   res.json(create_product);
 });
 
 router.patch("/update-productid=:id", async (req, res) => {
-  const update_product_by_id = await db_products.updateProductById(req.params.id, req.body);/// database er product e lekhbi
+  const update_product_by_id = await db_products.updateProductById(req.params.id, req.body);
   console.log("update_product_by_id");
   res.json(update_product_by_id);
 });
 
 router.get("/brands", async (req, res) => {
-  const all_brands = await db_products.getAllBrands();/// database er product e lekhbi
+  const all_brands = await db_products.getAllBrands();
   console.log("all brands");
   res.json(all_brands);
 });
@@ -78,7 +75,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const products_by_filter = await db_products.getAllProductsByFilter(req.body);/// database er product e lekhbi fetchall porducts er moto
+  const products_by_filter = await db_products.getAllProductsByFilter(req.body);
   console.log("products_by_filter");
   res.json(products_by_filter);
 });
