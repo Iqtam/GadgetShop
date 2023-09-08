@@ -32,6 +32,7 @@ async function dbexecute(sql, binds, options) {
   } finally {
     if (connection) {
       try {
+        // await connection.commit();
         await connection.close();
       } catch (err) {
         console.log("ERROR closing connection: " + err);

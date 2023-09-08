@@ -68,6 +68,7 @@ router.get("/brands", async (req, res) => {
   console.log("all brands");
   res.json(all_brands);
 });
+
 router.get("/:id", async (req, res) => {
   const product_by_id = await db_products.getProductBYId(req.params.id);
   console.log("product_by_id");
