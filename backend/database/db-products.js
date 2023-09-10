@@ -2,21 +2,42 @@ const database = require("./create-and-executedb");
 
 async function getAllProduct() {
   const sql = `
-    SELECT *
-    FROM Product
+    SELECT P.PRODUCT_ID, 
+    P.TITLLE, 
+    P.PRICE, 
+    P.STOCK, 
+    P.DESCRIPTION, 
+    P.IMAGE, 
+    P.CATEGORY_ID, 
+    P.BRAND, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN O.PERCENT_DISCOUNT ELSE 0 
+    END AS PERCENT_DISCOUNT, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN P.PRICE*(1-(O.PERCENT_DISCOUNT/100)) ELSE P.PRICE 
+    END AS DISCOUNTED_PRICE 
+    FROM PRODUCT P 
+    JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
+    JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
+    JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
+    ORDER BY PRODUCT_ID
     `;
   const binds = {};
   try {
     const result = await database.dbexecute(sql, binds, database.dboptions);
+    console.log(result);
     if (result) {
       return result.rows;
     } else {
       console.error("Query result is undefined.");
+      return null;
     }
   } catch (error) {
     console.error("An error occurred:", error);
+    throw error;
   }
 }
+
 async function getAllCategories() {
   const sql = `
   SELECT *

@@ -8,7 +8,7 @@ const db_order = require("../../database/db-order.js");
 const router = express.Router({ mergeParams: true });
 
 //Done
-router.get("/orders=:id", async (req, res) => {
+router.get("/customer=:id", async (req, res) => {
     const order_by_user = await db_order.getOrderBYCustomer(req.params.id);
     console.log("order_by_user");
     res.json(order_by_user);
