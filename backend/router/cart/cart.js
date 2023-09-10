@@ -1,16 +1,16 @@
-//http://localhost:5000/api/v1/orders
+//http://localhost:5000/api/v1/cart
 
 // libraries
 const express = require("express");
-const db_order = require("../../database/db-order.js");
+const db_cart = require("../../database/db-cart.js");
 
 // creating router
 const router = express.Router({ mergeParams: true });
 
-router.get("/order=:id", async (req, res) => {
-    const order_by_user = await db_cart.getOrderBYCustomer(req.params.id);
-    console.log("order_by_user");
-    res.json(order_by_user);
+router.get("/cart=:id", async (req, res) => {
+    const cart_by_user = await db_cart.getCartBYCustomer(req.params.id);
+    console.log("cart_by_user");
+    res.json(cart_by_user);
 });
 
 router.patch("/update-cart=:id", async (req, res) => {
@@ -36,17 +36,4 @@ router.delete("/delete/:id1/:id2", async(req, res) => {
     }
 });
 
-router.get('/shipping-method',async(req,res)=>{
-    console.log("yes")
-    res.send([{SHIPPING_ID:1,SHIPPING_NAME:"Courier",CHARGE:20},{SHIPPING_ID:2,SHIPPING_NAME:"Sundor Courier",CHARGE:30}])
-    console.log("yes2");
-});
-router.post('/create-order',async(req,res)=>{
-    console.log(req.body);
-    res.send();
-})
-
-
-
 module.exports = router;
-

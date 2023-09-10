@@ -40,7 +40,7 @@ router.get("/supplierId=:supplierId", async (req, res) => {
 
 router.get("/search", async(req, res) => {
   console.log(req.query)
-  const  {q}  = req.query;
+  const q  = req.query;
   if(!q) {
     return res.status(400).json({error: "Missing search query"});
   }
@@ -79,6 +79,12 @@ router.get("/", async (req, res) => {
   const products_by_filter = await db_products.getAllProductsByFilter(req.body);
   console.log("products_by_filter");
   res.json(products_by_filter);
+});
+
+router.get("/reviews/:id", async (req, res) => {
+  const product_review = await db_products.getReviewById(req.params.id);
+  console.log("product_review");
+  res.json(product_review);
 });
 
 
