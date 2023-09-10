@@ -9,12 +9,8 @@ const router = express.Router({ mergeParams: true });
 router.post("/signup", async (req, res) => {
   const { email, password, firstName, lastName, role } = req.body;
 
-  const isCustomerDuplicateEmail = await db_customer.getCustomerEmailValidation(
-    email
-  );
-  const isSupplierDuplicateEmail = await db_supplier.getSupplierEmailValidation(
-    email
-  );
+  const isCustomerDuplicateEmail = await db_customer.getCustomerEmailValidation(email);
+  const isSupplierDuplicateEmail = await db_supplier.getSupplierEmailValidation(email);
 
   if (
     isCustomerDuplicateEmail == "TRUE" ||

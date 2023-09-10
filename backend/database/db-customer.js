@@ -23,12 +23,12 @@ async function getCustomerEmailValidation(email) {
     FROM DUAL
     `;
   const binds = {
-    email:email,
+    email: email,
   };
   try {
     const result = await database.dbexecute(sql, binds, database.dboptions);
     if (result) {
-      return result.rows[0].IS_VALID;
+      return result.rows[0].IS_VALID === 'TRUE';
     } else {
       console.error('Query result is undefined.');
     }
@@ -104,43 +104,53 @@ async function getUserBYId(id) {
 }
 
 async function updateCustomerById(id, updatedCustomerData) {
-  const sql = `
-  UPDATE CUSTOMER C
-  SET C.FIRST_NAME = :first_name,
-      C.LAST_NAME = :last_name,
-      C.AREA = :area,
-      C.CITY = :city,
-      C.STATE = :state,
-      C.HOUSE = :house,
-      C.ROAD = :road,
-      C.EMAIL = :email,
-      C.PASSWORD = :password,
-      C.DATE_OF_BIRTH = :date_of_birth
-  WHERE C.CUSTOMER_ID = :id
-  `;
+  const {FIRST_NAME, LAST_NAME, AREA, CITY, STATE, HOUSE, ROAD, EMAIL, PASSWORD, DATE_OF_BIRTH } = updatedCustomerData;
 
-  const binds = {
-    first_name: updatedCustomerData.FIRST_NAME,
-    last_name: updatedCustomerData.LAST_NAME,
-    area: updatedCustomerData.AREA,
-    city: updatedCustomerData.CITY,
-    state: updatedCustomerData.STATE,
-    house: updatedCustomerData.HOUSE,
-    road: updatedCustomerData.ROAD,
-    email: updatedCustomerData.EMAIL,
-    password: updatedCustomerData.PASSWORD,
-    date_of_birth: updatedCustomerData.DATE_OF_BIRTH,
-    id: id,
-  };
-  try {
-    const result = await database.dbexecute(sql, binds, database.dboptions);
-    if (result) {
-      return result.rows;
-    } else {
-      console.error('Query result is undefined.');
-    }
-  } catch (error) {
-    console.error('An error occurred:', error);
+  const isCustomerDuplicateEmail = await getCustomerEmailValidation(EMAIL);
+
+  if (isCustomerDuplicateEmail == "TRUE") {
+    return res.status(400).json({ error: "User Email already exists" });
+  } else {
+
+      const sql = `
+      UPDATE CUSTOMER C
+      SET C.FIRST_NAME = :first_name,
+          C.LAST_NAME = :last_name,
+          C.AREA = :area,
+          C.CITY = :city,
+          C.STATE = :state,
+          C.HOUSE = :house,
+          C.ROAD = :road,
+          C.EMAIL = :email,
+          C.PASSWORD = :password,
+          C.DATE_OF_BIRTH = :date_of_birth
+      WHERE C.CUSTOMER_ID = :id
+      `;
+
+      const binds = {
+        first_name: FIRST_NAME,
+        last_name: LAST_NAME,
+        area: AREA,
+        city: CITY,
+        state: STATE,
+        house: HOUSE,
+        road: ROAD,
+        email: EMAIL,
+        password: PASSWORD,
+        date_of_birth: DATE_OF_BIRTH,
+        id: id,
+      };
+      try {
+        const result = await database.dbexecute(sql, binds, database.dboptions);
+        if (result) {
+          return result.rows;
+        } else {
+          console.error('Query result is undefined.');
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
+        throw error;
+      }
   }
 }
 

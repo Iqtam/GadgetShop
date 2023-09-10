@@ -87,6 +87,17 @@ router.get("/reviews/:id", async (req, res) => {
   res.json(product_review);
 });
 
+router.delete("/delete-product/:id", async(req, res) => {
+  const delete_product = await db_products.deleteProduct(req.params.id);
+  console.log("delete_product");
+  if(!delete_product) {
+    
+    res.status(200).json(delete_product);
+  } else {
+    res.status(404)
+  }
+});
+
 
 
 module.exports = router;

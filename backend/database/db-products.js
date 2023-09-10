@@ -337,6 +337,27 @@ async function getReviewById(id) {
   }
 }
 
+async function deleteProduct(id) {
+  const sql = `
+  DELETE FROM PRODUCT
+  WHERE PRODUCT_ID = :id
+  `;
+  console.log("Jani na by");
+  try {
+      const result = await database.dbexecute(sql, { id }, database.dboptions);
+      console.log("hjhgf" , result.rows);
+
+      if (result.rowsAffected === 1) {
+          return "successful";
+      } else {
+          throw new Error("Product not found in the cart");
+      }
+  } catch (error) {
+      console.error("An error occured:", error);      
+      return null;
+  }
+}
+
 module.exports = {
   getAllProduct,
   getAllCategories,
@@ -350,4 +371,5 @@ module.exports = {
   getAllBrands,
   getAllProductsByFilter,
   getReviewById,
+  deleteProduct
 };
