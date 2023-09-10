@@ -69,3 +69,10 @@ export function fetchBrands() {
     resolve({ data });
   });
 }
+export function fetchProductRiviews(id) {
+  return new Promise(async (resolve) => {
+    const response = await fetch(`${BASE_URL}/products/riviews/${id}`);
+    const data = await response.json();
+    resolve({ data });
+  });
+}

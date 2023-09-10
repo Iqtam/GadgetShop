@@ -1,3 +1,5 @@
+import { BASE_URL } from "../utils/apiURL";
+
 export function fetchLoggedInUserOrders() {
   return new Promise(async (resolve) =>{
     const response = await fetch('/orders/own/') 
@@ -8,11 +10,17 @@ export function fetchLoggedInUserOrders() {
 }
 
 
-export function fetchLoggedInUser() {
+export function fetchLoggedInUser(user) {
   return new Promise(async (resolve) =>{
-    const response = await fetch('/users/own') 
-    const data = await response.json()
+    
+    if(user.role=="customer"){
+      const response = await fetch(`${BASE_URL}/customer/${user.CUSTOMER_ID}`)
+      const data = await response.json()
     resolve({data})
+    } 
+    else if(user.role=="supplier"){const response = await fetch(`${BASE_URL}/supplier/${user.SUPPLIER_ID}`)
+    const data = await response.json()
+    resolve({data})}
   }
   );
 }

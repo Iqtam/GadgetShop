@@ -8,11 +8,15 @@ import Loader from "../../components/Loader/Loader";
 import {formatPrice} from "../../utils/helpers";
 import { addToCart, getCartMessageStatus, setCartMessageOff, setCartMessageOn } from '../../store/cartSlice';
 import CartMessage from "../../components/CartMessage/CartMessage";
+import { selectUserInfo } from '../../store/userSlice';
+
+import ProductRiviews from './ProductRiviews';
 
 const ProductSinglePage = () => {
   const {id} = useParams();
   const dispatch = useDispatch();
   const products = useSelector(getProductSingle);
+  const userInfo = useSelector(selectUserInfo);
   const product=products[0]
   
   const productSingleStatus = useSelector(getSingleProductStatus);
@@ -54,10 +58,10 @@ const ProductSinglePage = () => {
 
   const addToCartHandler = (product) => {
     // let discountedPrice = (product?.price) - (product?.price * (product?.discountPercentage / 100));
-    // let totalPrice = quantity * discountedPrice;
-    let totalPrice =quantity*product?.PRICE
-    // dispatch(addToCart({...product, quantity: quantity, totalPrice, discountedPrice}));
+    let totalPrice = quantity * product?.DISCOUNTED_PRICE;
+    // let totalPrice =quantity*product?.PRICE
     dispatch(addToCart({...product, quantity: quantity, totalPrice}));
+    // dispatch(addToCart({...product, quantity: quantity, totalPrice}));
     dispatch(setCartMessageOn(true));
   }
   const titleParts = product?.TITLLE.split(' ');
@@ -86,7 +90,7 @@ const ProductSinglePage = () => {
                   <div className='rating'>
                     <span className='text-orange fw-5'>Rating:</span>
                     <span className='mx-1'>
-                      {product?.rating}
+                      {product?.RATING|| 3}
                     </span>
                   </div>
                   <div className='vert-line'></div>
@@ -104,31 +108,31 @@ const ProductSinglePage = () => {
                 </div>
 
                 <div className = "price">
-                  {/* <div className='flex align-center'>
+                  <div className='flex align-center'>
+                    {product?.PERCENT_DISCOUNT!=0 &&
                     <div className='old-price text-gray'>
                       {formatPrice(product?.PRICE)}
-                    </div>
+                    </div>}
                     <span className='fs-14 mx-2 text-dark'>
                       Inclusive of all taxes
                     </span>
-                  </div> */}
+                  </div>
 
-                  {/* <div className='flex align-center my-1'>
-                    <div className='new-price fw-5 font-poppins fs-24 text-orange'>
-                      {formatPrice(discountedPrice)}
-                    </div>
+                  <div className='flex align-center my-1'>
+                  {product?.PERCENT_DISCOUNT!=0 &&
                     <div className='discount bg-orange fs-13 text-white fw-6 font-poppins'>
-                      {product?.discountPercentage}% OFF
-                    </div>
-                  </div> */}
+                      {product?.PERCENT_DISCOUNT}% OFF
+                    </div>}
+                  </div>
                   <div className='flex align-center my-1'>
                     <div className='new-price fw-5 font-poppins fs-24 text-orange'>
-                      {formatPrice(product?.PRICE)}
+                      {formatPrice(product?.DISCOUNTED_PRICE)}
                     </div>
                   </div>
 
                 </div>
-
+                {userInfo.role==="customer" && 
+                <div>
                 <div className='qty flex align-center my-4'>
                   <div className='qty-text'>Quantity:</div>
                   <div className='qty-change flex align-center mx-3'>
@@ -144,20 +148,26 @@ const ProductSinglePage = () => {
                     (product?.STOCK === 0) ? <div className ='qty-error text-uppercase bg-danger text-white fs-12 ls-1 mx-2 fw-5'>out of stock</div> : ""
                   }
                 </div>
-                  {/* ///Todo do not display for supplier */}
+                  
+                  
                 <div className='btns'>
                   <button type = "button" className='add-to-cart-btn btn'>
                     <i className='fas fa-shopping-cart'></i>
                     <span className='btn-text mx-2' onClick={() => { addToCartHandler(product)}}>add to cart</span>
                   </button>
-                  <button type = "button" className='buy-now btn mx-3'>
+                  {/* <button type = "button" className='buy-now btn mx-3'>
                     <span className='btn-text'>buy now</span>
-                  </button>
+                  </button> */}
                 </div>
+                </div>}
               </div>
             </div>
+            {console.log(product?.PRODUCT_ID)}
+            <ProductRiviews id={product?.PRODUCT_ID}/>
           </div>
         </div>
+        
+
       </div>
 
       {cartMessageStatus && <CartMessage />}

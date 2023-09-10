@@ -60,7 +60,12 @@ export const signOutAsync = createAsyncThunk(
 export const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
-  reducers: {},
+  reducers: {
+    resetUser: (state) => {
+      state.loggedInUserToken = null;
+    },
+
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createUserAsync.pending, (state) => {
@@ -113,7 +118,7 @@ export const authenticationSlice = createSlice({
       
   },
 });
-
+export const { resetUser } = authenticationSlice.actions;
 export const selectLoggedInUser = (state) => state.authentication.loggedInUserToken;
 export const selectError = (state) => state.authentication.error;
 export const selectUserChecked = (state) => state.authentication.userChecked;

@@ -4,13 +4,14 @@ import {
   updateUser,
   fetchLoggedInUser,
 } from "./userAPI";
-
+///TAMIM
 const initialState = {
   status: "idle",
   userInfo: {
+    LAST_NAME:"Tamim ",
     email: "test@gmail.com",
     password: "Qwerty123",
-    role: "user",
+    role: "customer",
     addresses: [
       {
         name: "Abhishek Rathore",
@@ -113,8 +114,8 @@ export const fetchLoggedInUserOrderAsync = createAsyncThunk(
 
 export const fetchLoggedInUserAsync = createAsyncThunk(
   "user/fetchLoggedInUser",
-  async () => {
-    const response = await fetchLoggedInUser();
+  async (user) => {
+    const response = await fetchLoggedInUser(user);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -133,7 +134,11 @@ export const updateUserAsync = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    resetUserInfo: (state) => {
+      state.userInfo = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchLoggedInUserOrderAsync.pending, (state) => {
@@ -161,7 +166,7 @@ export const userSlice = createSlice({
       });
   },
 });
-
+export const {resetUserInfo}=userSlice.actions;
 export const selectUserOrders = (state) => state.user.userInfo.orders;
 export const selectUserInfo = (state) => state.user.userInfo;
 export const selectUserInfoStatus = (state) => state.user.status;

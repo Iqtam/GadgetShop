@@ -10,15 +10,17 @@ import {
   getCartTotal,
 } from "../../store/cartSlice";
 import CartModal from "../CartModal/CartModal";
-
+import { selectUserInfo } from "../../store/userSlice";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import AccountMenu from "./UserMenu";
+import { userInfo } from '../../store/userSlice';
 const Navbar = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getAllCategories);
   const carts = useSelector(getAllCarts);
+  const userInfo=useSelector(selectUserInfo);
   const itemsCount = useSelector(getCartItemsCount);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -95,8 +97,8 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="navbar-user-profile">
-          <AccountMenu></AccountMenu>
-          
+          {userInfo && 
+          <AccountMenu/>}
           
         </div>
       </div>

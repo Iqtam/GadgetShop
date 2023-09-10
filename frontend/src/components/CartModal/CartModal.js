@@ -13,20 +13,20 @@ const CartModal = ({carts}) => {
             {
               carts.map(cart => {
                 return (
-                  <div className='cart-modal-item grid align-center font-manrope py-2' key = {cart.id}>
+                  <div className='cart-modal-item grid align-center font-manrope py-2' key = {cart.PRODUCT_ID}>
                     <div className='cart-modal-item-img'>
-                      <img src = {cart?.thumbnail} alt = "" className='img-cover' />
+                      <img src = {cart?.IMAGE} alt = "" className='img-cover' />
                     </div>
-                    <div className='cart-modal-item-title fs-13 font-manrope text-capitalize'>{cart?.title}</div>
+                    <div className='cart-modal-item-title fs-13 font-manrope text-capitalize'>{cart?.TITLLE}</div>
                     <div className='cart-modal-item-price text-orange fs-14 fw-6'>
-                      {formatPrice(cart?.discountedPrice)}
+                      {formatPrice(cart?.DISCOUNTED_PRICE)}
                     </div>
                   </div>
                 )
               })
             }
 
-            <div className='text-capitalize view-cart-btn bg-orange fs-15 font-manrope text-center'>view my shopping cart</div>
+            <div className='text-capitalize view-cart-btn bg-orange fs-15 font-manrope text-center'>View my shopping cart</div>
           </div>) : (
           <div className = "flex flex-column align-center justify-center cart-modal-empty">
             <img src = {shopping_cart} alt = "" className='' />

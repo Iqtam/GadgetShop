@@ -5,6 +5,7 @@ import {
   fetchBrands,
   fetchCategories,
   fetchProductsByFilters,
+  fetchProductRiviews,
   updateProduct,
   createProduct,
 } from "./productAPI";
@@ -12,6 +13,7 @@ const initialState = {
   products: [],
   brands: [],
   categories: [],
+  riviews: [],
   totalItems: 0,
   selectedProduct: null,
   productsStatus: STATUS.IDLE,
@@ -44,11 +46,11 @@ const productSlice = createSlice({
 
       .addCase(fetchAsyncProductSingle.pending, (state, action) => {
         state.productSingleStatus = STATUS.LOADING;
-        
       })
 
       .addCase(fetchAsyncProductSingle.fulfilled, (state, action) => {
         state.productSingle = action.payload;
+
         state.productSingleStatus = STATUS.SUCCEEDED;
         state.selectedProduct = action.payload;
       })
@@ -107,7 +109,13 @@ const productSlice = createSlice({
         );
         state.products[index] = action.payload;
         state.selectedProduct = action.payload;
-
+      })
+      .addCase(fetchProductRiviewsAsync.pending, (state) => {
+        state.productsStatus = STATUS.LOADING;
+      })
+      .addCase(fetchProductRiviewsAsync.fulfilled, (state, action) => {
+        state.productsStatus = STATUS.SUCCEEDED;
+        state.riviews = action.payload;
       });
   },
 });
@@ -188,6 +196,13 @@ export const updateProductAsync = createAsyncThunk(
     return response.data;
   }
 );
+export const fetchProductRiviewsAsync = createAsyncThunk(
+  "product/riviews",
+  async (id) => {
+    const response = await fetchProductRiviews(id);
+    return response.data;
+  }
+);
 
 export const { clearSelectedProduct } = productSlice.actions;
 export const selectTotalItems = (state) => state.product.totalItems;
@@ -199,4 +214,5 @@ export const getAllProductsStatus = (state) => state.product.productsStatus;
 export const getProductSingle = (state) => state.product.productSingle;
 export const getSingleProductStatus = (state) =>
   state.product.productSingleStatus;
+export const getProductRiviews = (state) => state.product.riviews;
 export default productSlice.reducer;

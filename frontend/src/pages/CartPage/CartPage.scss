@@ -73,6 +73,28 @@
                 color: $clr-danger;
             }
         }
+        .delete-btn2{
+            height: 46px;
+            font-size: 15px;
+            border: 1px solid $clr-red;
+            padding: 0 1.8rem;
+            transition: $transition-ease;
+            
+            &-text{
+                text-transform: capitalize;
+            }
+            &:first-child{
+                background-color: #FFEEE8;
+                color: $clr-orange;
+            }
+            &:last-child{
+                background-color: $clr-orange;
+                color: white;
+            }
+            &:hover{
+                opacity: 0.9;
+            }
+        }
         .qty-change{
             .qty-decrease, .qty-increase{
                 font-size: 13px;

@@ -76,7 +76,7 @@ function SupplierOrders() {
   }, [dispatch, page, sort]);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto  min-h-screen">
       <div className="bg-gray-100 flex items-center justify-center font-sans overflow-hidden">
         <div className="w-full">
           <div className="bg-white shadow-md rounded my-6">

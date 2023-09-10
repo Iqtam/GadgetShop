@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUserInfo, updateUserAsync } from '../../store/userSlice';
+import { fetchLoggedInUserAsync, selectUserInfo, updateUserAsync } from '../../store/userSlice';
 import { useForm } from 'react-hook-form';
+import { selectLoggedInUser } from '../../store/authenticationSlice';
 
 export default function UserProfile() {
   const dispatch = useDispatch();
-  const userInfo = useSelector(selectUserInfo);
+  // const userInfo = useSelector(selectUserInfo);
+  const user=useSelector(selectLoggedInUser);
   const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
   const [showAddAddressForm, setShowAddAddressForm] = useState(false);
-
-
+  useEffect(() => {
+    dispatch(fetchLoggedInUserAsync())
+  }, []);
+  const userInfo = useSelector(selectUserInfo);
   const {
     register,
     handleSubmit,

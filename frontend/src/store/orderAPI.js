@@ -1,6 +1,7 @@
+import { BASE_URL } from "../utils/apiURL";
 export function createOrder(order) {
     return new Promise(async (resolve) => {
-      const response = await fetch('/orders', {
+      const response = await fetch(`${BASE_URL}/orders/create-order`, {
         method: 'POST',
         body: JSON.stringify(order),
         headers: { 'content-type': 'application/json' },
@@ -42,3 +43,14 @@ export function createOrder(order) {
     });
   }
   
+  export function fetchShippingMethod() {
+    
+     return new Promise(async (resolve) => {
+       const response = await fetch(
+         `${BASE_URL}/orders/shipping-method`
+       );
+       const data = await response.json();
+       console.log(data)
+       resolve(data);
+     });
+   }

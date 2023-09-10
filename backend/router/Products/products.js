@@ -49,6 +49,12 @@ router.get("/search", async(req, res) => {
  
 router.get("/:id", async (req, res) => {
   const product_by_id = await db_products.getProductBYId(req.params.id);
+  // const DISCOUNTED_PRICE=100;
+  // const PERCENT_DISCOUNT=10;
+  // product_by_id={...product_by_id,DISCOUNTED_PRICE,PERCENT_DISCOUNT}
+  product_by_id[0].DISCOUNTED_PRICE=100;
+  product_by_id[0].PERCENT_DISCOUNT=10;
+  console.log(product_by_id);
   console.log("product_by_id");
   res.json(product_by_id);
 });
@@ -72,12 +78,16 @@ router.get("/brands", async (req, res) => {
   console.log("all brands");
   res.json(all_brands);
 });
-
+router.get("/riviews/:id",async(req,res)=>{
+  res.send([{ RATINGS: 3, COMMENTS:"this is good",CUSTOMER_NAME:"MD.tamim iqbal"}, {RATINGS: 4, COMMENTS:"this is good",CUSTOMER_NAME:"MD.tamim iqbal"}])
+  
+})
 router.get("/", async (req, res) => {
   const products_by_filter = await db_products.getAllProductsByFilter();/// database er product e lekhbi fetchall porducts er moto
   console.log("products_by_filter");
   res.json(products_by_filter);
 });
+
 
 // exports.fetchAllProducts = async (req, res) => {
 //   // filter = {"category":["smartphone","laptops"]}

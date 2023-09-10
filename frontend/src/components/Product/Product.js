@@ -16,19 +16,19 @@ const Product = ({ product }) => {
           />
         </div>
         <div className="product-item-info fs-14">
-          {/* <div className="brand">
+          <div className="brand">
             <span>Brand: </span>
-            <span className="fw-7">{product?.brand}</span>
-          </div> */}
+            <span className="fw-7">{product?.BRAND}</span>
+          </div>
           <div className="title py-2">{product?.TITLLE}</div>
           <div className="price flex align-center justify-center">
-            {/* <span className="old-price">{formatPrice(product?.PRICE)}</span> */}
+            <span className="old-price">{formatPrice(product?.PRICE)}</span>
             <span className="new-price">
-              {formatPrice(product?.PRICE)}
+              {formatPrice(product?.DISCOUNTED_PRICE)}
             </span> 
-            {/* <span className="discount fw-6">
-              ({product?.discountedPercentage}% Off)
-            </span> */}
+            <span className="discount fw-6">
+              ({product?.PERCENT_DISCOUNT}% Off)
+            </span>
           </div>
         </div>
       </div>
