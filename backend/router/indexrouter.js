@@ -7,7 +7,7 @@ const productRouter = require('./Products/products');
 const authenticationRouter=require('./Authentication/Authentication');
 const orderRouter = require('./Orders/Orders');
 const customerRouter = require('./User/Customer');
-// const supplierRouter = require('./User/Supplier');
+const supplierRouter = require('./User/Supplier');
 const cartRouter = require('./cart/cart');
 
 

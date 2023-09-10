@@ -16,7 +16,7 @@ router.get("/orders=:id", async (req, res) => {
 
 //Done
 router.get("/supplier-orders=:id", async (req, res) => {
-    const order_by_supplier = await db_order.getOredrBySupplier(req.paramsms.id);
+    const order_by_supplier = await db_order.getOrderBySupplier(req.params.id);
     console.log("order_by_supplier");
     res.json(order_by_supplier);
 });

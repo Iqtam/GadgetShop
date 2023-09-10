@@ -28,10 +28,10 @@ async function getCartBYCustomer(id) {
 
 async function updateCartById(id, updatedCartData) {
     const sql = `
-    UPDATE PRODUCT_CART PC
-    SET PC.PRODUCT_ID = :product_id,
-        PC.QUANTITY = :quantity,
-    WHERE PC.CART_ID = :id
+    UPDATE PRODUCT_CART
+    SET PRODUCT_ID = :product_id,
+        QUANTITY = :quantity,
+    WHERE CART_ID = :id
     `;
   
     const binds = {
@@ -41,6 +41,7 @@ async function updateCartById(id, updatedCartData) {
     };
     try {
       const result = await database.dbexecute(sql, binds, database.dboptions);
+      console.log("What's wrong!");
       if (result) {
         return "Cart updated successfully";
       } else {
@@ -78,19 +79,20 @@ async function addToCart(cartData) {
     }
 }
 
-async function deleteFromCart(req, res) {
-    const { product_id, cart_id } = req.params;
+async function deleteFromCart(product_id, cart_id) {
+  
     const sql = `
     DELETE FROM PRODUCT_CART 
     WHERE PRODUCT_ID = :product_id AND CART_ID = :cart_id
     `;
     try {
         const result = await database.dbexecute(sql, { product_id, cart_id }, database.dboptions);
+        console.log(result.rows);
 
         if (result.rowsAffected === 1) {
-            res.status(200).json({ message: 'Cart item deleted successfully.' });
+            return "successful"
         } else {
-            res.status(404).json({ error: 'Cart item not found.' });
+            throw new Error("Product not found in the cart");
         }
     } catch (error) {
             console.error("An error occured:", error);

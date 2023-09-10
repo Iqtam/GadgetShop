@@ -15,6 +15,7 @@ async function getOrderBYCustomer(id) {
     };
     try {
       const result = await database.dbexecute(sql, binds, database.dboptions);
+      console.log(result.rows);
       if (result && result.rows) {
         return result.rows;
       } else {
@@ -27,7 +28,7 @@ async function getOrderBYCustomer(id) {
     }
 }
 
-async function getOredrBySupplier(id) {
+async function getOrderBySupplier(id) {
   const sql = `
   SELECT O.ORDER_ID, O.ORDER_DATE, O.HOUSE, O.ROAD, O.AREA, O.CITY, O.STATE, O.CART_ID, S.SHIPPING_NAME, S.CHARGE, PC.PRODUCT_ID, P.TITLLE, PC.QUANTITY, PC.TOTAL_PRICE, P.IMAGE, P.BRAND
   FROM ORDERS O 
@@ -42,7 +43,8 @@ async function getOredrBySupplier(id) {
   };
   try {
     const result = await database.dbexecute(sql, binds, database.dboptions);
-    if (result && result.rows) {
+    console.log("FUAD");
+    if (result) {
       return result.rows;
     } else {
       console.error("Query result is undefined.");
@@ -115,14 +117,14 @@ async function createOrder(orderData) {
 }
 
 async function updateOrderTrackingById(id, updateShippingData) {
-  const sql =`
-  UPDATE SHIPPING_METHOD SM 
-  SET SM.STATUS = :shippinG_status,
-  WHERE SM.ORDER_ID = :id
+  const sql = `
+    UPDATE ORDER_TRACKING 
+    SET STATUS = :shipping_status
+    WHERE ORDER_ID = :id
   `;
 
   const binds = {
-    shipping_staus: updateShippingData.STATUS ,
+    shipping_status: updateShippingData.STATUS,
     id: id
   };
 
@@ -131,7 +133,7 @@ async function updateOrderTrackingById(id, updateShippingData) {
     if (result) {
       return "Shipping status updated successfully";
     } else {
-      console.error('Query result is undefined.');
+      return "Query result is undefined.";
     }
   } catch (error) {
     console.error('An error occurred:', error);
@@ -139,9 +141,10 @@ async function updateOrderTrackingById(id, updateShippingData) {
 }
 
 
+
 module.exports = {
   getOrderBYCustomer,
-  getOredrBySupplier,
+  getOrderBySupplier,
   getShippingMethodByOrder,
   createOrder, 
   updateOrderTrackingById,

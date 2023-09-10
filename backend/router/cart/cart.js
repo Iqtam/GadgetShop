@@ -7,7 +7,7 @@ const db_cart = require("../../database/db-cart.js");
 // creating router
 const router = express.Router({ mergeParams: true });
 
-router.get("/cart=:id", async (req, res) => {
+router.get("/customer=:id", async (req, res) => {
     const cart_by_user = await db_cart.getCartBYCustomer(req.params.id);
     console.log("cart_by_user");
     res.json(cart_by_user);
@@ -26,10 +26,11 @@ router.post("/add", async (req, res) => {
     res.json(add_to_cart);
 });
 
-router.delete("/delete/:id1/:id2", async(req, res) => {
-    const { id1, id2 } = req.params;
-    const deletedItem = await db_cart.deleteFromCart(id1, id2);
-    if(deletedItem) {
+router.delete("/delete", async(req, res) => {
+    const {product_id, cart_id} = req.query;
+    console.log(product_id, cart_id);
+    const deletedItem = await db_cart.deleteFromCart(product_id, cart_id);
+    if(deletedItem !== null) {
         res.status(200).json({ message: 'Cart item deleted successfully' });
     } else {
         res.status(404).json({ error: 'Cart item not deleted' });
