@@ -16,7 +16,6 @@ import {
   SupplierProductList,
   SupplierProductForm,
   SupplierOrders,
-  
 } from "./pages/index";
 import Logout from "./components/Authentication/Logout";
 // components
@@ -24,12 +23,25 @@ import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Footer from "./components/Footer/Footer";
 import store from "./store/store";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import Checkout from "./pages/CheckoutPage/Checkout";
+import { useSelector } from "react-redux";
+import { selectLoggedInUser } from "./store/authenticationSlice";
+import { useEffect } from "react";
 
 
-
+import { fetchLoggedInUserAsync } from "./store/userSlice";
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
+  console.log(user);
+  console.log("app")
+  useEffect(() => {
+    if (user) {
+       dispatch(fetchLoggedInUserAsync(user?.user));
+       console.log(user);
+    }
+  }, [user]);
   return (
     <div className="App">
       <Provider store={store}>
@@ -37,7 +49,6 @@ function App() {
           <Header />
           <Sidebar />
           <Routes>
-            
             <Route
               path="/"
               element={
@@ -46,7 +57,7 @@ function App() {
                 </>
               }
             />
-            
+
             <Route
               path="/product/:id"
               element={
@@ -55,7 +66,7 @@ function App() {
                 </>
               }
             />
-            
+
             <Route
               path="/category/:category"
               element={
@@ -64,7 +75,7 @@ function App() {
                 </>
               }
             />
-            
+
             <Route
               path="/cart"
               element={
@@ -73,7 +84,7 @@ function App() {
                 </>
               }
             />
-            
+
             <Route
               path="/search/:searchTerm"
               element={
@@ -83,15 +94,27 @@ function App() {
               }
             />
             <Route path="/signin" element={<Login />} />
-            <Route path="/signup" element={<Signup />} /> 
-            <Route path="/signout" element={<Logout/>}/>
-            <Route exact path="/customer/my-profile" element={<UserProfile />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signout" element={<Logout />} />
+            <Route
+              exact
+              path="/customer/my-profile"
+              element={<UserProfile />}
+            />
             <Route exact path="/customer/my-orders" element={<UserOrders />} />
-            <Route exact path="/supplier/product-list" element={<SupplierProductList />} />
-            <Route exact path="/supplier/product-form/edit/:id" element={<SupplierProductForm/>} />
+            <Route
+              exact
+              path="/supplier/my-products"
+              element={<SupplierProductList />}
+            />
+            <Route
+              exact
+              path="/supplier/product-form/edit/:id"
+              element={<SupplierProductForm />}
+            />
             <Route exact path="/supplier/orders" element={<SupplierOrders />} />
             <Route exact path="/cart/checkout" element={<Checkout />} />
-            <Route path='*' element={<PageNotFound/>} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
           <Footer />
         </BrowserRouter>

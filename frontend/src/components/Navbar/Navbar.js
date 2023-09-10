@@ -15,15 +15,16 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import AccountMenu from "./UserMenu";
-import { userInfo } from '../../store/userSlice';
+import { userInfo } from "../../store/userSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getAllCategories);
   const carts = useSelector(getAllCarts);
-  const userInfo=useSelector(selectUserInfo);
+  const userInfo = useSelector(selectUserInfo);
   const itemsCount = useSelector(getCartItemsCount);
   const [searchTerm, setSearchTerm] = useState("");
-
+  console.log(userInfo);
+  console.log("navbar");
   const handleSearchTerm = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
@@ -90,17 +91,15 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-cart flex align-center">
-          <Link to="/cart" className="cart-btn">
-            <i className="fa-solid fa-cart-shopping"></i>
-            <div className="cart-items-value">{itemsCount}</div>
-            <CartModal carts={carts} />
-          </Link>
+          {userInfo?.role == "customer" && (
+            <Link to="/cart" className="cart-btn">
+              <i className="fa-solid fa-cart-shopping"></i>
+              <div className="cart-items-value">{itemsCount}</div>
+              <CartModal carts={carts} />
+            </Link>
+          )}
         </div>
-        <div className="navbar-user-profile">
-          {userInfo && 
-          <AccountMenu/>}
-          
-        </div>
+        <div className="navbar-user-profile">{userInfo && <AccountMenu />}</div>
       </div>
     </nav>
   );

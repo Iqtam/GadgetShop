@@ -48,11 +48,11 @@ const SupplierProductListPage = () => {
             <div className="categories-item">
               <Link
                 to="/supplier/product-form"
-                className="rounded-md ml-auto mx-100 my-5 mb-8 bg-green-700 px-3 py-2 text-sm font-semibold text-white  shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md ml-auto mx-100 my-5 mb-10 bg-green-700 px-3 py-2 text-sm font-semibold text-white  shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Add New Product
               </Link>
-              <div className="title-md">
+              <div className="title-md mt-8">
                 <h3>Your products</h3>
               </div>
               {productStatus === STATUS.LOADING ? (

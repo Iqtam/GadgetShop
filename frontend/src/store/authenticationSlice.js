@@ -61,9 +61,9 @@ export const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
   reducers: {
-    resetUser: (state) => {
-      state.loggedInUserToken = null;
-    },
+    // resetUser: (state) => {
+    //   state.loggedInUserToken = null;
+    // },
 
   },
   extraReducers: (builder) => {
@@ -118,7 +118,7 @@ export const authenticationSlice = createSlice({
       
   },
 });
-export const { resetUser } = authenticationSlice.actions;
+// export const { resetUser } = authenticationSlice.actions;
 export const selectLoggedInUser = (state) => state.authentication.loggedInUserToken;
 export const selectError = (state) => state.authentication.error;
 export const selectUserChecked = (state) => state.authentication.userChecked;

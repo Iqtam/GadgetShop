@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 export default function AccountMenu() {
   const userInfo = useSelector(selectUserInfo);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  console.log(userInfo);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -137,6 +138,36 @@ export default function AccountMenu() {
                 </Typography>
               </Link>
             ) : null}
+            
+          </MenuItem>
+          <MenuItem onClick={handleClose}>
+            <Avatar />
+            {userInfo.role === "customer" ? (
+              <Link to="/customer/my-reviews">
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: 16,
+                    marginLeft: 2,
+                  }}
+                >
+                  My Reviews
+                </Typography>
+              </Link>
+            ) : userInfo.role === "supplier" ? (
+              <Link to="/supplier/my-products">
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: 16,
+                    marginLeft: 2,
+                  }}
+                >
+                  My Products
+                </Typography>
+              </Link>
+            ) : null}
+            
           </MenuItem>
           <Divider />
           {userInfo && (

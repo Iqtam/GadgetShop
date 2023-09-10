@@ -68,7 +68,7 @@ const ProductSinglePage = () => {
   const brand = titleParts ? titleParts[0] : '';
 
   return (
-    <main className='py-5 bg-whitesmoke'>
+    <main className='py-5 bg-whitesmoke min-h-screen'>
       <div className='product-single'>
         <div className='container'>
           <div className='product-single-content bg-white grid'>
@@ -88,10 +88,10 @@ const ProductSinglePage = () => {
                 </div>
                 <div className='info flex align-center flex-wrap fs-14'>
                   <div className='rating'>
-                    <span className='text-orange fw-5'>Rating:</span>
+                    {/* <span className='text-orange fw-5'>Rating:</span>
                     <span className='mx-1'>
                       {product?.RATING|| 3}
-                    </span>
+                    </span> */}
                   </div>
                   <div className='vert-line'></div>
                   <div className='brand'>
@@ -131,7 +131,7 @@ const ProductSinglePage = () => {
                   </div>
 
                 </div>
-                {userInfo.role==="customer" && 
+                {userInfo?.role==="customer" && 
                 <div>
                 <div className='qty flex align-center my-4'>
                   <div className='qty-text'>Quantity:</div>

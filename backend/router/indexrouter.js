@@ -6,8 +6,9 @@ const router = express.Router({mergeParams : true});
 const productRouter = require('./Products/products');
 const authenticationRouter=require('./Authentication/Authentication');
 const ordersRouter=require('./Orders/Orders')
-
-
+const customerRouter=require('./User/Customer');
+const supplierRouter=require('./User/Supplier');
+const cartRouter = require('./cart/cart');
 // ROUTE: home page
 router.get('/', async (req, res) =>{
   
@@ -21,8 +22,8 @@ router.get('/', async (req, res) =>{
 
 router.use('/products', productRouter);
 router.use('/auth',authenticationRouter);
-
+router.use('/customer',customerRouter);
 router.use('/orders',ordersRouter);
-
-
+router.use('/supplier',supplierRouter);
+router.use('/cart', cartRouter);
 module.exports = router;

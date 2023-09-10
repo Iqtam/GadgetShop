@@ -1,9 +1,12 @@
 import { BASE_URL } from "../utils/apiURL";
 
-export function fetchLoggedInUserOrders() {
+export function fetchLoggedInUserOrders(user) {
   return new Promise(async (resolve) =>{
-    const response = await fetch('/orders/own/') 
+    console.log("abacd ")
+    const response = await fetch(`${BASE_URL}/orders/customer/${user.CUSTOMER_ID}`) 
     const data = await response.json()
+    console.log(data);
+    console.log("user orders");
     resolve({data})
   }
   );
@@ -12,13 +15,14 @@ export function fetchLoggedInUserOrders() {
 
 export function fetchLoggedInUser(user) {
   return new Promise(async (resolve) =>{
-    
-    if(user.role=="customer"){
-      const response = await fetch(`${BASE_URL}/customer/${user.CUSTOMER_ID}`)
+    console.log("userapi");
+    console.log(user);
+    if(user.ROLE=="customer"){
+      const response = await fetch(`${BASE_URL}/customer/customer=${user.CUSTOMER_ID}`)
       const data = await response.json()
     resolve({data})
     } 
-    else if(user.role=="supplier"){const response = await fetch(`${BASE_URL}/supplier/${user.SUPPLIER_ID}`)
+    else if(user.ROLE=="supplier"){const response = await fetch(`${BASE_URL}/supplier/supplier=${user.SUPPLIER_ID}`)
     const data = await response.json()
     resolve({data})}
   }

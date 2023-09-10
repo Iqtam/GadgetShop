@@ -22,7 +22,7 @@ export default function ProductRiviews(props) {
         
         riviews.map(riview => (
             <div>
-                {riview.RATING}
+                {riview?.RATINGS}
             <Typography component="legend">Rating:<Rating name="read-only" value={riview?.RATINGS} readOnly /></Typography>
             <Typography component="legend">Comment:{riview?.COMMENTS}</Typography>
             <Typography component="legend">Comment By:{riview?.CUSTOMER_NAME}</Typography>
