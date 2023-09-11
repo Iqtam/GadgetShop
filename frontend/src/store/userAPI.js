@@ -17,12 +17,12 @@ export function fetchLoggedInUser(user) {
   return new Promise(async (resolve) =>{
     console.log("userapi");
     console.log(user);
-    if(user.ROLE=="customer"){
+    if(user?.ROLE=="customer"){
       const response = await fetch(`${BASE_URL}/customer/customer=${user.CUSTOMER_ID}`)
       const data = await response.json()
     resolve({data})
     } 
-    else if(user.ROLE=="supplier"){const response = await fetch(`${BASE_URL}/supplier/supplier=${user.SUPPLIER_ID}`)
+    else if(user?.ROLE=="supplier"){const response = await fetch(`${BASE_URL}/supplier/supplier=${user.SUPPLIER_ID}`)
     const data = await response.json()
     resolve({data})}
   }

@@ -9,6 +9,7 @@ async function getAllProduct() {
     P.DESCRIPTION, 
     P.IMAGE, 
     P.CATEGORY_ID, 
+    C.CATEGORY_NAME, 
     P.BRAND, 
     CASE 
       WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN O.PERCENT_DISCOUNT ELSE 0 
@@ -17,9 +18,9 @@ async function getAllProduct() {
       WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN P.PRICE*(1-(O.PERCENT_DISCOUNT/100)) ELSE P.PRICE 
     END AS DISCOUNTED_PRICE 
     FROM PRODUCT P 
-    JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
-    JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
-    JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
+    LEFT OUTER JOIN CATEGORY C ON(P.CATEGORY_ID = C.CATEGORY_ID)
+    LEFT OUTER JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
+    LEFT OUTER JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
     ORDER BY PRODUCT_ID
     `;
   const binds = {};
@@ -59,9 +60,26 @@ async function getAllCategories() {
 
 async function getAllProductsByCategory(category) {
   const sql = `
-  SELECT * 
-  FROM PRODUCT P JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
-  WHERE  LOWER(REPLACE(CATEGORY_NAME,' ','')) LIKE LOWER(REPLACE(:category,' ',''))
+  SELECT P.PRODUCT_ID, 
+    P.TITLLE, 
+    P.PRICE, 
+    P.STOCK, 
+    P.DESCRIPTION, 
+    P.IMAGE, 
+    P.CATEGORY_ID, 
+    C.CATEGORY_NAME, 
+    P.BRAND, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN O.PERCENT_DISCOUNT ELSE 0 
+    END AS PERCENT_DISCOUNT, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN P.PRICE*(1-(O.PERCENT_DISCOUNT/100)) ELSE P.PRICE 
+    END AS DISCOUNTED_PRICE 
+    FROM PRODUCT P 
+    LEFT OUTER JOIN CATEGORY C ON(P.CATEGORY_ID = C.CATEGORY_ID)
+    LEFT OUTER JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
+    LEFT OUTER JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
+  WHERE  LOWER(REPLACE(C.CATEGORY_NAME,' ','')) LIKE LOWER(REPLACE(:category,' ',''))
   `;
   const binds = {
     category: category,
@@ -100,8 +118,25 @@ async function getAllProductsBySupplier(supplierId) {
 }
 async function getLimitedProducts(limit) {
   const sql = `
-  SELECT * 
-  FROM PRODUCT P JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
+  SELECT P.PRODUCT_ID, 
+    P.TITLLE, 
+    P.PRICE, 
+    P.STOCK, 
+    P.DESCRIPTION, 
+    P.IMAGE, 
+    P.CATEGORY_ID, 
+    C.CATEGORY_NAME, 
+    P.BRAND, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN O.PERCENT_DISCOUNT ELSE 0 
+    END AS PERCENT_DISCOUNT, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN P.PRICE*(1-(O.PERCENT_DISCOUNT/100)) ELSE P.PRICE 
+    END AS DISCOUNTED_PRICE 
+    FROM PRODUCT P 
+    LEFT OUTER JOIN CATEGORY C ON(P.CATEGORY_ID = C.CATEGORY_ID)
+    LEFT OUTER JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
+    LEFT OUTER JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
   WHERE  (
     SELECT COUNT(*)
     FROM PRODUCT P2
@@ -122,6 +157,60 @@ async function getLimitedProducts(limit) {
     console.error("An error occurred:", error);
   }
 }
+
+
+async function getSimilarProducts(parameters) {
+  const product_id=parameters.product_id;
+  const category_id=parameters.category_id;
+  const limit=parameters.limit;
+  console.log('similar db');
+  console.log(category_id);
+  console.log(limit);
+  /// to be change
+  const sql = `
+  SELECT P.PRODUCT_ID, 
+    P.TITLLE, 
+    P.PRICE, 
+    P.STOCK, 
+    P.DESCRIPTION, 
+    P.IMAGE, 
+    P.CATEGORY_ID, 
+    C.CATEGORY_NAME, 
+    P.BRAND, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN O.PERCENT_DISCOUNT ELSE 0 
+    END AS PERCENT_DISCOUNT, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN P.PRICE*(1-(O.PERCENT_DISCOUNT/100)) ELSE P.PRICE 
+    END AS DISCOUNTED_PRICE 
+    FROM PRODUCT P 
+    LEFT OUTER JOIN CATEGORY C ON(P.CATEGORY_ID = C.CATEGORY_ID)
+    LEFT OUTER JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
+    LEFT OUTER JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
+  WHERE P.PRODUCT_ID<>:product_id AND P.CATEGORY_ID=:category_id AND (
+    SELECT COUNT(*)
+    FROM PRODUCT P2
+    WHERE P2.CATEGORY_ID=P.CATEGORY_ID AND P2.PRODUCT_ID<=P.PRODUCT_ID
+  )<=(:limit)
+  `;
+  const binds = {
+    product_id:product_id,
+    limit: limit,
+    category_id:category_id,
+  };
+  try {
+    const result = await database.dbexecute(sql, binds, database.dboptions);
+    if (result) {
+      return result.rows;
+    } else {
+      console.error("Query result is undefined.");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+
 async function getProductBYId(id) {
   const sql = `
   SELECT P.PRODUCT_ID, 
@@ -131,6 +220,7 @@ async function getProductBYId(id) {
   P.DESCRIPTION, 
   P.IMAGE, 
   P.CATEGORY_ID, 
+  C.CATEGORY_NAME,
   P.BRAND, 
   CASE 
     WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN O.PERCENT_DISCOUNT ELSE 0 
@@ -139,9 +229,9 @@ async function getProductBYId(id) {
     WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN P.PRICE*(1-(O.PERCENT_DISCOUNT/100)) ELSE P.PRICE 
   END AS DISCOUNTED_PRICE 
   FROM PRODUCT P 
-  JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
-  JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
-  JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
+  LEFT OUTER JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
+  LEFT OUTER JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
+  LEFT OUTER JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
   WHERE P.PRODUCT_ID = :id
   `;
   const binds = {
@@ -403,5 +493,6 @@ module.exports = {
   getAllBrands,
   getAllProductsByFilter,
   getReviewById,
+  getSimilarProducts,
   deleteProduct
 };

@@ -23,7 +23,7 @@ router.get("/limit=:limit", async (req, res) => {
   const limited_products = await db_products.getLimitedProducts(
     req.params.limit
   );
-  console.log("limited_products");
+  console.log(limited_products);
   res.json(limited_products);
 });
 
@@ -32,7 +32,7 @@ router.get("/supplierId=:supplierId", async (req, res) => {
     req.params.supplierId
   );
   
-  // console.log(productsOfSupplier);
+  console.log(productsOfSupplier);
   console.log("productsOfSupplier");
   res.json(productsOfSupplier);
 });
@@ -56,6 +56,14 @@ router.get("/:id", async (req, res) => {
   console.log("product_by_id");
   res.json(product_by_id);
 });
+router.get("/similar-products/product-id=:product_id/category-id=:category_id/limit=:limit", async (req, res) => {
+
+  const similarProducts= await db_products.getSimilarProducts(req.params);
+ 
+  console.log(similarProducts);
+  console.log("similarProducts");
+  res.json(similarProducts);
+});
 
 router.post("/create-product", async (req, res) => {
   console.log(req.body);
@@ -77,9 +85,10 @@ router.get("/brands", async (req, res) => {
 });
 
 
-router.get("/reviews/:id", async (req, res) => {
+router.get("/riviews/:id", async (req, res) => {
   const product_review = await db_products.getReviewById(req.params.id);
-  console.log("product_review");
+  console.log("review")
+  console.log(product_review);
   res.json(product_review);
 });
 

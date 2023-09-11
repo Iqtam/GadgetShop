@@ -15,11 +15,14 @@ const initialState = {
   brands: [],
   categories: [],
   riviews: [],
+  similarProducts:[],
+  similarProductsStatus:STATUS.IDLE,
   totalItems: 0,
   selectedProduct: null,
   productsStatus: STATUS.IDLE,
   productSingle: [],
   productSingleStatus: STATUS.IDLE,
+
 };
 
 const productSlice = createSlice({
@@ -44,6 +47,19 @@ const productSlice = createSlice({
       .addCase(fetchAsyncProducts.rejected, (state, action) => {
         state.productsStatus = STATUS.FAILED;
       })
+      .addCase(fetchSimilarProductsAsync.pending, (state, action) => {
+        state.similarProductsStatus = STATUS.LOADING;
+      })
+
+      .addCase(fetchSimilarProductsAsync.fulfilled, (state, action) => {
+        state.similarProducts = action.payload;
+        state.similarProductsStatus = STATUS.SUCCEEDED;
+      })
+
+      .addCase(fetchSimilarProductsAsync.rejected, (state, action) => {
+        state.similarProductsStatus = STATUS.FAILED;
+      })
+      
 
       .addCase(fetchAsyncProductSingle.pending, (state, action) => {
         state.productSingleStatus = STATUS.LOADING;
@@ -126,6 +142,15 @@ export const fetchAsyncProducts = createAsyncThunk(
   "products/fetch",
   async (limit) => {
     const response = await fetch(`${BASE_URL}/products/limit=${limit}`);
+    const data = await response.json();
+    return data;
+  }
+);
+
+export const fetchSimilarProductsAsync = createAsyncThunk(
+  "similar-products/fetch",
+  async (parameters) => {
+    const response = await fetch(`${BASE_URL}/products/similar-products/product-id=${parameters.product_id}/category-id=${parameters.category_id}/limit=${parameters.limit}`);
     const data = await response.json();
     return data;
   }
@@ -220,6 +245,8 @@ export const selectProductById = (state) => state.product.selectedProduct;
 export const getAllProducts = (state) => state.product.products;
 export const getAllProductsStatus = (state) => state.product.productsStatus;
 export const getProductSingle = (state) => state.product.productSingle;
+export const getSimilarProducts=(state)=>state.product.similarProducts;
+export const getSimilarProductsStatus=(state)=>state.product.similarProductsStatus;
 export const getSingleProductStatus = (state) =>
   state.product.productSingleStatus;
 export const getProductRiviews = (state) => state.product.riviews;

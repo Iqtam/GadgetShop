@@ -59,6 +59,7 @@ function App() {
             />
 
             <Route
+            exact 
               path="/product/:id"
               element={
                 <>
@@ -111,6 +112,11 @@ function App() {
             <Route
               exact
               path="/supplier/product-form/edit/:id"
+              element={<SupplierProductForm />}
+            />
+            <Route
+              exact
+              path="/supplier/product-form"
               element={<SupplierProductForm />}
             />
             <Route exact path="/supplier/my-orders" element={<SupplierOrders />} />

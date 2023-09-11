@@ -50,18 +50,18 @@ console.log(userInfo)
   }, [params.id, dispatch]);
 
   useEffect(() => {
-    if (selectedProduct && params.id) {
-      setValue("TITLLE", selectedProduct.TITLLE);
-      setValue("DESCRIPTION", selectedProduct.DESCRIPTION);
-      setValue("PRICE", selectedProduct.PRICE);
-      setValue('PERCENT_DISCOUNT', selectedProduct.PERCENT_DISCOUNT);  
-      setValue("STOCK", selectedProduct.STOCK);
-      setValue("IMAGE", selectedProduct.IMAGE);
-      setValue("BRAND", selectedProduct.BRAND);
-      setValue("CATEGORY", selectedProduct.CATEGORY);
+     {
+      setValue("TITLLE", selectedProduct?.TITLLE);
+      setValue("DESCRIPTION", selectedProduct?.DESCRIPTION);
+      setValue("PRICE", selectedProduct?.PRICE);
+      setValue('PERCENT_DISCOUNT', selectedProduct?.PERCENT_DISCOUNT);  
+      setValue("STOCK", selectedProduct?.STOCK);
+      setValue("IMAGE", selectedProduct?.IMAGE);
+      setValue("BRAND", selectedProduct?.BRAND);
+      setValue("CATEGORY", selectedProduct?.CATEGORY);
       
     }
-  }, [selectedProduct, params.id, setValue]);
+  }, [ setValue]);
 
   const handleDelete = () => {
     const product = { ...selectedProduct };

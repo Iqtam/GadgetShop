@@ -22,13 +22,15 @@ const Product = ({ product }) => {
           </div>
           <div className="title py-2">{product?.TITLLE}</div>
           <div className="price flex align-center justify-center">
-            <span className="old-price">{formatPrice(product?.PRICE)}</span>
+          {product?.PERCENT_DISCOUNT!=0 &&
+            <span className="old-price">{formatPrice(product?.PRICE)}</span>}
             <span className="new-price">
               {formatPrice(product?.DISCOUNTED_PRICE)}
             </span> 
+            {product?.PERCENT_DISCOUNT!=0 &&
             <span className="discount fw-6">
               ({product?.PERCENT_DISCOUNT}% Off)
-            </span>
+            </span>}
           </div>
         </div>
       </div>
@@ -37,3 +39,5 @@ const Product = ({ product }) => {
 };
 
 export default Product;
+
+

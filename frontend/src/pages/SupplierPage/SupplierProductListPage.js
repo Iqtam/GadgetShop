@@ -12,13 +12,14 @@ import {
 import Loader from "../../components/Loader/Loader";
 import { STATUS } from "../../utils/status";
 import SupplierProductList from "../../components/Supplier/SupplierProductList";
+import { selectLoggedInUser } from "../../store/authenticationSlice";
 
 const SupplierProductListPage = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getAllCategories);
-
+    const userInfo =useSelector(selectLoggedInUser);
   useEffect(() => {
-    dispatch(fetchAsyncProductsOfSupplier(10)); //// this should be supplier id
+    dispatch(fetchAsyncProductsOfSupplier(userInfo?.SUPPLIER_ID)); //// this should be supplier id
     console.log("use effect of supplier");
   }, []);
 
