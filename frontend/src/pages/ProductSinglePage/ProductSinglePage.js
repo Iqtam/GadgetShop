@@ -162,7 +162,7 @@ const ProductSinglePage = () => {
                 </div>}
               </div>
             </div>
-            {console.log(product?.PRODUCT_ID)}
+            {console.log("nfksaldf")}
             <ProductRiviews id={product?.PRODUCT_ID}/>
           </div>
         </div>

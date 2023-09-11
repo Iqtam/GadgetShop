@@ -1,0 +1,66 @@
+select * from PRODUCT order by PRODUCT_ID;
+
+
+INSERT INTO CATEGORY(CATEGORY_NAME,CHILD_PARENT_CATEGORY_ID) VALUES ('Neckband',11);
+
+select * from CATEGORY order by CATEGORY_ID;
+
+
+ALTER TABLE Customer
+MODIFY city VARCHAR2(50) NULL ;
+
+ALTER TABLE Customer
+MODIFY state VARCHAR2(50) NULL;
+ALTER TABLE Customer
+MODIFY DATE_OF_BIRTH DATE NULL;
+
+ alter table SUPPLIER
+ modify company_name VARCHAR2(100)  NULL
+  
+ modify city VARCHAR2(50)  NULL
+  modify state VARCHAR2(50)  NULL
+  modify website VARCHAR2(1024)  NULL
+  ;
+	
+	
+	
+	ALTER TABLE SUPPLIER 
+ADD  first_name VARCHAR2(255);
+
+	ALTER TABLE SUPPLIER 
+ADD  last_name VARCHAR2(255);
+
+
+SELECT * FROM SUPPLIER;
+
+
+
+
+
+
+
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('2', 'Minhaz', 'Fuad', 'BUET', 'Dhaka', 'Dhaka', 'Sher-E-Bangla Hall', NULL, 'minhaz.fuad28@gmail.com', 'Amar1234', TO_DATE('2001-01-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS'));
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('3', 'Swapnil', 'Ahmmad', 'BUET', 'Dhaka', 'Dhaka', 'Sher-E-Bangla Hall', NULL, 'swapnil.09@gmail.com', 'Amar12345', NULL);
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('4', 'Kowshik', 'Saha', 'BUET', 'Dhaka', 'Dhaka', 'Sher-E-Bangla Hall', NULL, 'kowshik.06@gmail.com', 'Amar12534', NULL);
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('5', 'Jaber', 'Deedar', 'BUET', 'Dhaka', 'Dhaka', 'Sher-E-Bangla Hall', NULL, 'jaber.23@gmail.com', 'Amar12346', NULL);
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('6', 'Jakaria', 'Hossain', 'BUET', 'Dhaka', 'Dhaka', 'M.A. Rashid Hall', NULL, 'jakaria.26@gmail.com', 'Amari1234', NULL);
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('7', 'Azmal', 'Sirat', 'BUET', 'Dhaka', 'Dhaka', 'With family', NULL, 'azmal.sirat56@gmail.com', 'AmariTumi1234', TO_DATE('2001-11-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS'));
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('8', 'Ibnul', 'Nabil', 'BUET', 'Dhaka', 'Dhaka', 'With Family', NULL, 'ibnul.nabil60@gmail.com', 'Amarartomar1234', NULL);
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('9', 'Tausif', 'Rashid', 'BUET', 'Dhaka', 'Dhaka', 'With Family', NULL, 'tausif.r52@gmail.com', 'Amarartomari1234', NULL);
+INSERT INTO "GADGETSHOP"."CUSTOMER" VALUES ('10', 'Oitijhya', 'Haque', 'BUET', 'Dhaka', 'Dhaka', 'With Family', NULL, 'oitijhya.49@gmail.com', 'Amarartomar123499', NULL);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

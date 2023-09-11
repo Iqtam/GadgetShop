@@ -7,7 +7,7 @@ const db_cart = require("../../database/db-cart.js");
 // creating router
 const router = express.Router({ mergeParams: true });
 
-router.get("/customer=:id", async (req, res) => {
+router.get("/customer/:id", async (req, res) => {
     const cart_by_user = await db_cart.getCartBYCustomer(req.params.id);
     console.log("cart_by_user");
     res.json(cart_by_user);

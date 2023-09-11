@@ -8,11 +8,13 @@ import {
   selectProductById,
   updateProductAsync,
   fetchCategoriesAsync,
+  deleteProductAsync,
 } from "../../store/productSlice";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Modal from "../ProductModal/Modal";
+import { selectUserInfo } from "../../store/userSlice";
 // import { useAlert } from 'react-alert';
 
 function SupplierProductForm() {
@@ -35,7 +37,8 @@ function SupplierProductForm() {
   console.log(selectedProduct);
   const [openModal, setOpenModal] = useState(null);
   //   const alert = useAlert();
-
+const userInfo=useSelector(selectUserInfo);
+console.log(userInfo)
   useEffect(() => {
     dispatch(fetchCategoriesAsync());
     if (params.id) {
@@ -48,22 +51,22 @@ function SupplierProductForm() {
 
   useEffect(() => {
     if (selectedProduct && params.id) {
-      setValue("title", selectedProduct.TITLLE);
-      setValue("description", selectedProduct.DESCRIPTION);
-      setValue("price", selectedProduct.PRICE);
-      //   setValue('discountPercentage', selectedProduct.discountPercentage);  /// Tamim
-      setValue("stock", selectedProduct.STOCK);
-      setValue("image1", selectedProduct.IMAGE);
-      setValue("brand", selectedProduct.BRAND);
-      setValue("category", selectedProduct.CATEGORY);
+      setValue("TITLLE", selectedProduct.TITLLE);
+      setValue("DESCRIPTION", selectedProduct.DESCRIPTION);
+      setValue("PRICE", selectedProduct.PRICE);
+      setValue('PERCENT_DISCOUNT', selectedProduct.PERCENT_DISCOUNT);  
+      setValue("STOCK", selectedProduct.STOCK);
+      setValue("IMAGE", selectedProduct.IMAGE);
+      setValue("BRAND", selectedProduct.BRAND);
+      setValue("CATEGORY", selectedProduct.CATEGORY);
       
     }
   }, [selectedProduct, params.id, setValue]);
 
   const handleDelete = () => {
     const product = { ...selectedProduct };
-    product.deleted = true;
-    dispatch(updateProductAsync(product));
+    product.DELETED = true;
+    dispatch(deleteProductAsync(product));
   };
 
   return (
@@ -71,20 +74,21 @@ function SupplierProductForm() {
       <form
         noValidate
         onSubmit={handleSubmit((data) => {
+          console.log("product edit data")
           console.log(data);
           const product = { ...data };
           product.IMAGE = [product.IMAGE];
 
           product.RATING = 0;
-
+          product.SUPPLIER_ID=userInfo[0]?.SUPPLIER_ID;
           delete product["IMAGE"];
           product.PRICE = +product.PRICE;
           product.STOCK = +product.STOCK;
-          //   product.discountPercentage = +product.discountPercentage; Tamim
+          product.discountPercentage = +product.discountPercentage; 
           console.log(product);
           if (params.id) {
             product.PRODUCT_ID = params.id;
-            product.RATING = selectedProduct.RATING || 0;
+            product.RATING = selectedProduct?.RATING || 0;
             dispatch(updateProductAsync(product));
             // alert.success('Product Updated');
 
@@ -99,7 +103,7 @@ function SupplierProductForm() {
         <div className="space-y-12 bg-white p-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Add Product
+              Edit Product
             </h2>
 
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -111,7 +115,7 @@ function SupplierProductForm() {
 
               <div className="sm:col-span-6">
                 <label
-                  htmlFor="title"
+                  htmlFor="TITLLE"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Product Name
@@ -120,10 +124,10 @@ function SupplierProductForm() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                     <input
                       type="text"
-                      {...register("title", {
+                      {...register("TITLLE", {
                         required: "name is required",
                       })}
-                      id="title"
+                      id="TITLLE"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -132,15 +136,15 @@ function SupplierProductForm() {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="description"
+                  htmlFor="DESCRIPTION"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Description
                 </label>
                 <div className="mt-2">
                   <textarea
-                    id="description"
-                    {...register("description", {
+                    id="DESCRIPTION"
+                    {...register("DESCRIPTION", {
                       required: "description is required",
                     })}
                     rows={3}
@@ -155,14 +159,14 @@ function SupplierProductForm() {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="brand"
+                  htmlFor="BRAND"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Brand
                 </label>
                 <div className="mt-2">
                   <select
-                    {...register("brand", {
+                    {...register("BRAND", {
                       required: "brand is required",
                     })}
                   >
@@ -178,7 +182,7 @@ function SupplierProductForm() {
 
               <div className="col-span-full">
                 <label
-                  htmlFor="category"
+                  htmlFor="CATEGORY"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Category
@@ -201,7 +205,7 @@ function SupplierProductForm() {
 
               <div className="sm:col-span-2">
                 <label
-                  htmlFor="price"
+                  htmlFor="PRICE"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Price
@@ -210,11 +214,11 @@ function SupplierProductForm() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                     <input
                       type="number"
-                      {...register("price", {
+                      {...register("PRICE", {
                         required: "price is required",
                         min: 1,
                       })}
-                      id="price"
+                      id="PRICE"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -246,7 +250,7 @@ function SupplierProductForm() {
 
               <div className="sm:col-span-2">
                 <label
-                  htmlFor="stock"
+                  htmlFor="STOCK"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Stock
@@ -255,11 +259,11 @@ function SupplierProductForm() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                     <input
                       type="number"
-                      {...register("stock", {
+                      {...register("STOCK", {
                         required: "stock is required",
                         min: 0,
                       })}
-                      id="stock"
+                      id="STOCK"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -268,7 +272,7 @@ function SupplierProductForm() {
 
               <div className="sm:col-span-6">
                 <label
-                  htmlFor="image1"
+                  htmlFor="IMAGE"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Image 1
@@ -277,10 +281,10 @@ function SupplierProductForm() {
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
                     <input
                       type="text"
-                      {...register("image1", {
+                      {...register("IMAGE", {
                         required: "image1 is required",
                       })}
-                      id="image1"
+                      id="IMAGE"
                       className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     />
                   </div>

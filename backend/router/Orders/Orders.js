@@ -2,59 +2,16 @@
 
 // libraries
 const express = require("express");
-const db_order = require("../../database/db-orders.js");
+const db_order = require("../../database/db-order.js");
 
 // creating router
 const router = express.Router({ mergeParams: true });
 
 //Done
-router.get("/customer/:id", async (req, res) => {
-    // const order_by_user = await db_order.getOrderBYCustomer(req.params.id);
-    // console.log("order_by_user");
-    // res.json(order_by_user);
-    console.log("tamim");
-    orders=[
-        {
-          ORDER_ID: 2,
-          STATUS: "ORDERED",
-          items: [
-            {
-              PRODUCT_ID: 6,
-              TITLLE:
-                "ASUS Chromebook Celeron Dual Core - (4 GB/64 GB EMMC Storage/Chrome OS) CX1101CMA_ID-GJ0002 / CX1101CM...",
-      
-              IMAGE:
-                "https://rukminim2.flixcart.com/image/312/312/kwnv6a80/computer/9/c/i/-original-imag9aajekwegabt.jpeg?q=70",
-      
-              BRAND: "ASUS",
-              QUANTITY: 3,
-              TOTAL_PRICE: 400,
-            },
-            {
-              PRODUCT_ID: 6,
-              TITLLE:
-                "ASUS Chromebook Celeron Dual Core - (4 GB/64 GB EMMC Storage/Chrome OS) CX1101CMA_ID-GJ0002 / CX1101CM...",
-      
-              IMAGE:
-                "https://rukminim2.flixcart.com/image/312/312/kwnv6a80/computer/9/c/i/-original-imag9aajekwegabt.jpeg?q=70",
-      
-              BRAND: "ASUS",
-              QUANTITY: 3,
-              TOTAL_PRICE: 400,
-            },
-          ],
-          TOTAL_AMOUNT: 4,
-          address: {
-            HOUSE: "daffsd",
-            ROAD: "dasfd",
-            AREA: "fdgfdsg",
-            CITY: "fdsgdsfg",
-            STATE: "jgejtoi",
-          },
-        },
-      ]
-      console.log(orders);
-      res.json(orders);
+router.get("/customer=:id", async (req, res) => {
+    const order_by_user = await db_order.getOrderBYCustomer(req.params.id);
+    console.log("order_by_user");
+    res.json(order_by_user);
 });
 
 //Done

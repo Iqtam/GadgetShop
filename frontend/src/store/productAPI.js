@@ -11,6 +11,17 @@ export function createProduct(product) {
     resolve({ data });
   });
 }
+export function deleteProduct(product) {
+  return new Promise(async (resolve) => {
+    const response = await fetch(`${BASE_URL}/products/delete-product/${product.PRODUCT_ID}`, {
+      method: "DELETE",
+      body: JSON.stringify(product),
+      headers: { "content-type": "application/json" },
+    });
+    const data = await response.json();
+    resolve({ data });
+  });
+}
 
 export function updateProduct(update) {
   return new Promise(async (resolve) => {
@@ -75,4 +86,4 @@ export function fetchProductRiviews(id) {
     const data = await response.json();
     resolve({ data });
   });
-}
+};

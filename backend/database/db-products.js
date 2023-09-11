@@ -2,21 +2,42 @@ const database = require("./create-and-executedb");
 
 async function getAllProduct() {
   const sql = `
-    SELECT *
-    FROM Product
+    SELECT P.PRODUCT_ID, 
+    P.TITLLE, 
+    P.PRICE, 
+    P.STOCK, 
+    P.DESCRIPTION, 
+    P.IMAGE, 
+    P.CATEGORY_ID, 
+    P.BRAND, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN O.PERCENT_DISCOUNT ELSE 0 
+    END AS PERCENT_DISCOUNT, 
+    CASE 
+      WHEN SYSDATE BETWEEN O.START_DATE AND O.END_DATE THEN P.PRICE*(1-(O.PERCENT_DISCOUNT/100)) ELSE P.PRICE 
+    END AS DISCOUNTED_PRICE 
+    FROM PRODUCT P 
+    JOIN CATEGORY C ON(P.CATEGORY_ID=C.CATEGORY_ID)
+    JOIN PRODUCT_OFFER PO ON (P.PRODUCT_ID = PO.PRODUCT_ID)
+    JOIN OFFER O ON(O.OFFER_ID = PO.OFFER_ID)
+    ORDER BY PRODUCT_ID
     `;
   const binds = {};
   try {
     const result = await database.dbexecute(sql, binds, database.dboptions);
+    console.log(result);
     if (result) {
       return result.rows;
     } else {
       console.error("Query result is undefined.");
+      return null;
     }
   } catch (error) {
     console.error("An error occurred:", error);
+    throw error;
   }
 }
+
 async function getAllCategories() {
   const sql = `
   SELECT *
@@ -142,6 +163,7 @@ async function getProductBYId(id) {
   }
 }
 
+
 async function searchProducts(searchQuery) {
   const sql = `
   SELECT *
@@ -197,6 +219,26 @@ async function createProduct(productData) {
     console.error("An error occurred:", error);
   }
 }
+
+async function getAllCategories() {
+  const sql = `
+  SELECT *
+  FROM CATEGORY
+  WHERE CHILD_PARENT_CATEGORY_ID IS NOT NULL
+  `;
+  const binds = {};
+  try {
+    const result = await database.dbexecute(sql, binds, database.dboptions);
+    if (result) {
+      return result.rows;
+    } else {
+      console.error("Query result is undefined.");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
 async function updateProductById(id, updatedProductData) {
   const sql = `
     UPDATE PRODUCT
@@ -317,12 +359,23 @@ async function getReviewById(id) {
 }
 
 async function deleteProduct(id) {
-  const sql = `
-  DELETE FROM PRODUCT
-  WHERE PRODUCT_ID = :id
-  `;
-  console.log("Jani na by");
+  const relatedTables = ["PRODUCT_FEATURES", "PRODUCT_OFFER", "PRODUCT_CART"]
+  console.log("AMAR");
   try {
+      for(const tableName of relatedTables){
+        const deleteSql = `
+        DELETE FROM ${tableName}
+        WHERE PRODUCT_ID = :id
+        `;
+
+        await database.dbexecute(deleteSql, { id }, database.dboptions);
+      }
+
+      const sql = `
+      DELETE FROM PRODUCT
+      WHERE PRODUCT_ID = :id
+      `;
+
       const result = await database.dbexecute(sql, { id }, database.dboptions);
       console.log("hjhgf" , result.rows);
 

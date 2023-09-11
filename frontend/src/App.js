@@ -107,12 +107,13 @@ function App() {
               path="/supplier/my-products"
               element={<SupplierProductList />}
             />
+            
             <Route
               exact
               path="/supplier/product-form/edit/:id"
               element={<SupplierProductForm />}
             />
-            <Route exact path="/supplier/orders" element={<SupplierOrders />} />
+            <Route exact path="/supplier/my-orders" element={<SupplierOrders />} />
             <Route exact path="/cart/checkout" element={<Checkout />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>

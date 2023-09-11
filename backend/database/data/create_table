@@ -1,0 +1,178 @@
+CREATE TABLE Customer
+(
+  customer_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  first_name VARCHAR2(100),
+  last_name VARCHAR2(100) NOT NULL,
+  area VARCHAR2(100),
+  city VARCHAR2(50) NOT NULL,
+  state VARCHAR2(50) NOT NULL,
+  house VARCHAR2(100),
+  road VARCHAR2(100),
+  email VARCHAR2(100) NOT NULL,
+  password VARCHAR2(1024) NOT NULL,
+  date_of_birth DATE NOT NULL,
+  PRIMARY KEY (customer_id),
+	UNIQUE(email),
+	UNIQUE(password) 
+);
+
+CREATE TABLE Supplier
+(
+  supplier_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  company_name VARCHAR2(100) NOT NULL,
+  house VARCHAR2(100),
+  road VARCHAR2(100),
+  area VARCHAR2(100),
+  city VARCHAR2(50) NOT NULL,
+  state VARCHAR2(50) NOT NULL,
+  email VARCHAR2(100) NOT NULL,
+  website VARCHAR2(1024) NOT NULL,
+  password VARCHAR2(1024) NOT NULL,
+  PRIMARY KEY (supplier_id),
+	UNIQUE(email),
+	UNIQUE(password) 
+);
+
+CREATE TABLE Cart
+(
+  cart_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  customer_id INT NOT NULL,
+  PRIMARY KEY (cart_id, customer_id),
+  FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
+);
+
+CREATE TABLE Shipping_method
+(
+  shipping_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  shipping_name VARCHAR2(100) NOT NULL,
+  charge NUMBER NOT NULL,
+  PRIMARY KEY (shipping_id)
+);
+
+CREATE TABLE Offer
+(
+  offer_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  percent_discount NUMBER NOT NULL,
+  min_quantity INT,
+  offer_name VARCHAR2(100) NOT NULL,
+  PRIMARY KEY (offer_id, start_date, end_date)
+);
+
+CREATE TABLE Customer_contact_no
+(
+  contact_no INT NOT NULL,
+  customer_id INT NOT NULL,
+  PRIMARY KEY (contact_no, customer_id),
+  FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
+);
+
+CREATE TABLE Orders
+(
+  order_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  order_date DATE NOT NULL,
+  house INT NOT NULL,
+  road VARCHAR2(100),
+  area VARCHAR2(100),
+  city VARCHAR2(50) NOT NULL,
+  state VARCHAR2(50) NOT NULL,
+  cart_id INT NOT NULL,
+  customer_id INT NOT NULL,
+  shipping_id INT NOT NULL,
+  PRIMARY KEY (order_id, cart_id, customer_id),
+  FOREIGN KEY (cart_id, customer_id) REFERENCES Cart(cart_id, customer_id),
+  FOREIGN KEY (shipping_id) REFERENCES Shipping_method(shipping_id)
+);
+
+CREATE TABLE Order_tracking
+(
+  tracking_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  status VARCHAR2(100) NOT NULL,
+  order_id INT NOT NULL,
+  cart_id INT NOT NULL,
+  customer_id INT NOT NULL,
+  PRIMARY KEY (tracking_id, order_id, cart_id, customer_id),
+  FOREIGN KEY (order_id, cart_id, customer_id) REFERENCES Orders(order_id, cart_id, customer_id)
+);
+
+CREATE TABLE Payment
+(
+  payment_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  method VARCHAR2(100) NOT NULL,
+  order_id INT NOT NULL,
+  cart_id INT NOT NULL,
+  customer_id INT NOT NULL,
+  PRIMARY KEY (payment_id, order_id, cart_id, customer_id),
+  FOREIGN KEY (order_id, cart_id, customer_id) REFERENCES Orders(order_id, cart_id, customer_id)
+);
+
+CREATE TABLE Category
+(
+  category_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  category_name VARCHAR2(100) NOT NULL,
+  child_parent_category_id INT,
+  PRIMARY KEY (category_id),
+  FOREIGN KEY (child_parent_category_id) REFERENCES Category(category_id)
+);
+
+CREATE TABLE Product
+(
+  product_id NUMBER GENERATED ALWAYS as IDENTITY(START with 1 INCREMENT by 1),
+  titlle VARCHAR2(100) NOT NULL,
+  price NUMBER NOT NULL,
+  stock NUMBER,
+  description VARCHAR2(2048),
+  image VARCHAR2(1024) default'https://www.pexels.com/photo/top-view-photo-gadgets-on-hardwood-floor-3178938/',
+  supplier_id INT NOT NULL,
+  category_id INT NOT NULL,
+  PRIMARY KEY (product_id, supplier_id),
+  FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id),
+  FOREIGN KEY (category_id) REFERENCES Category(category_id)
+);
+
+
+CREATE TABLE Product_offer
+(
+  product_id INT NOT NULL,
+  supplier_id INT NOT NULL,
+  offer_id INT NOT NULL,
+	start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  PRIMARY KEY (product_id, supplier_id, offer_id),
+  FOREIGN KEY (product_id, supplier_id) REFERENCES Product(product_id, supplier_id),
+  FOREIGN KEY (offer_id,start_date,end_date) REFERENCES Offer(offer_id,start_date,end_date)
+);
+
+CREATE TABLE Product_cart
+(
+  quantity INT NOT NULL,
+  cart_id INT NOT NULL,
+  customer_id INT NOT NULL,
+  product_id INT NOT NULL,
+  supplier_id INT NOT NULL,
+  PRIMARY KEY (cart_id, customer_id, product_id, supplier_id),
+  FOREIGN KEY (cart_id, customer_id) REFERENCES Cart(cart_id, customer_id),
+  FOREIGN KEY (product_id, supplier_id) REFERENCES Product(product_id, supplier_id)
+);
+
+CREATE TABLE reviews
+(
+  ratings NUMBER,
+  comments VARCHAR2(2048),
+	customer_id INT NOT NULL,
+  product_id INT NOT NULL,
+  supplier_id INT NOT NULL,
+  PRIMARY KEY (customer_id, product_id, supplier_id),
+  FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+  FOREIGN KEY (product_id, supplier_id) REFERENCES Product(product_id, supplier_id)
+);
+
+CREATE TABLE Product_features
+(
+  features INT NOT NULL,
+  product_id INT NOT NULL,
+  supplier_id INT NOT NULL,
+  PRIMARY KEY (features, product_id, supplier_id),
+  FOREIGN KEY (product_id, supplier_id) REFERENCES Product(product_id, supplier_id)
+);

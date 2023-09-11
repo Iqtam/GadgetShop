@@ -8,6 +8,7 @@ import {
   fetchProductRiviews,
   updateProduct,
   createProduct,
+  deleteProduct,
 } from "./productAPI";
 const initialState = {
   products: [],
@@ -185,6 +186,13 @@ export const createProductAsync = createAsyncThunk(
   "product/create",
   async (product) => {
     const response = await createProduct(product);
+    return response.data;
+  }
+);
+export const deleteProductAsync = createAsyncThunk(
+  "product/create",
+  async (product) => {
+    const response = await deleteProduct(product);
     return response.data;
   }
 );
