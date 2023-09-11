@@ -359,12 +359,23 @@ async function getReviewById(id) {
 }
 
 async function deleteProduct(id) {
-  const sql = `
-  DELETE FROM PRODUCT
-  WHERE PRODUCT_ID = :id
-  `;
-  console.log("Jani na by");
+  const relatedTables = ["PRODUCT_FEATURES", "PRODUCT_OFFER", "PRODUCT_CART"]
+  console.log("AMAR");
   try {
+      for(const tableName of relatedTables){
+        const deleteSql = `
+        DELETE FROM ${tableName}
+        WHERE PRODUCT_ID = :id
+        `;
+
+        await database.dbexecute(deleteSql, { id }, database.dboptions);
+      }
+
+      const sql = `
+      DELETE FROM PRODUCT
+      WHERE PRODUCT_ID = :id
+      `;
+
       const result = await database.dbexecute(sql, { id }, database.dboptions);
       console.log("hjhgf" , result.rows);
 
