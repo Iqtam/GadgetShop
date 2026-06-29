@@ -9,7 +9,7 @@ import {formatPrice} from "../../utils/helpers";
 import { addToCart, getCartMessageStatus, setCartMessageOff, setCartMessageOn } from '../../store/cartSlice';
 import CartMessage from "../../components/CartMessage/CartMessage";
 import { selectUserInfo } from '../../store/userSlice';
-
+import SimilarProduct from "./SimilarProducts"
 import ProductRiviews from './ProductRiviews';
 
 const ProductSinglePage = () => {
@@ -68,7 +68,8 @@ const ProductSinglePage = () => {
   const brand = titleParts ? titleParts[0] : '';
 
   return (
-    <main className='py-5 bg-whitesmoke min-h-screen'>
+    <>
+    <main className='py-5 bg-whitesmoke '>
       <div className='product-single'>
         <div className='container'>
           <div className='product-single-content bg-white grid'>
@@ -164,6 +165,7 @@ const ProductSinglePage = () => {
             </div>
             {console.log("nfksaldf")}
             <ProductRiviews id={product?.PRODUCT_ID}/>
+            
           </div>
         </div>
         
@@ -172,7 +174,10 @@ const ProductSinglePage = () => {
 
       {cartMessageStatus && <CartMessage />}
     </main>
+    <SimilarProduct id={product?.PRODUCT_ID} category_id={product?.CATEGORY_ID} limit={5}/>
+    </>
   )
+  
 }
 
 export default ProductSinglePage
