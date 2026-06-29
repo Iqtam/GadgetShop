@@ -4,7 +4,7 @@ oracledb.autoCommit = true;
 async function dbstart() {
   console.log("starting up database.");
   await oracledb.createPool({
-    user: "GADGETSHOP",
+    user: "FGADGETSHOP",
     password: "12345",
     connectString: "localhost:1521/ORCLPDB",
     poolAlias:'default',
